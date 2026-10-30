@@ -1,0 +1,79 @@
+# C-Suite Coach
+
+**C-Suite Coach Institute** is an executive-education and certification app for current and aspiring C-suite leaders
+(CEO, CFO, COO, CHRO, CTO/CIO/CISO, CMO). Members study research briefings and real business cases, drill what they learn
+with spaced repetition (the CAF Guide method: active recall, reveal, rate yourself, Leitner boxes), practise decisions in
+written boardroom challenges, sit a final examination, and earn certificates with public verification codes. The
+Institute is the app's own authority: the certificates say so honestly. Built on [Anvil](https://anvil.works).
+
+- **App repo:** github.com/arkulinskis/csuitecoach (branch `master`). Anvil pulls `master`.
+- **Live:** not yet published (to be filled in once the user publishes).
+- **The research** behind the content: `RESEARCH.md` in the project folder (not synced to the repo); every module and case also lists its sources.
+
+## What it does
+
+**For everyone (no account needed):**
+- **Landing page:** photo hero with a sample certificate, the method (4 steps), the 7 programs, Casebook teasers, good vs
+  bad advice, a quote, credential verification, the Honour Roll, FAQ (including "is it accredited?": no).
+- **Programs** (`#tracks`, `#tracks/<id>`): 7 programs (Executive Foundations + 6 role programs), each with modules,
+  outcomes, the final examination and the Fellowship explained.
+- **Module briefings** (`#module/<id>`): readable by anyone: the briefing, Do / Avoid lists, case files, sources.
+- **The Casebook** (`#cases`, `#cases/<id>`): 24 real, sourced cases (Tylenol, Ford's red slide, Intel, IBM, Kodak,
+  Blockbuster, Qwikster, Starbucks, Microsoft, Unilever, Wells Fargo, Boeing 737 MAX, GM, BP, Maersk, Equifax,
+  CrowdStrike, Southwest, SVB, Theranos, Disney, Patagonia, PepsiCo, Teledyne), filterable by exemplary / cautionary / mixed.
+- **Verify a credential** (`#verify/<code>`) and **certificate pages** (`#certificate/<code>`), plus the public **Honour Roll**.
+
+**For members:**
+- **Dashboard** (`#home`): rank (Analyst → Chair) and XP, streak, drills due today, the next module, open examinations,
+  every program's progress, credentials, case of the day, Honour Roll.
+- **Drills** (`#study/review`, `#study/<module>`): recall cards and "advice calls" (sound advice or a trap?). Reveal, then
+  Still learning / Got it (keys: space, 1, 2). Leitner boxes 0-6, due after 0/1/3/7/16/35/90 days. Missed cards return
+  once at the end of the session.
+- **Challenges** (`#challenge/<id>`): a scenario per module; write your decision, then compare with the examiners' model
+  answer and tick the rubric criteria you covered. 70% to pass. Attempts are kept.
+- **Module completion** = briefing read + every drill learned (box ≥ 1) + challenge ≥ 70%. +40 XP.
+- **Final examination** (`#exam/<track>`), open when every module of the program is complete: honour code, Part I recall
+  round (12 random drills from the program, 80% "Got it"), Part II capstone case (rubric, 70%). Pass → a certificate
+  `CSC-<CODE>-<YEAR>-<6 chars>` (+200 XP); fail → retake after 30 minutes, missed drills go back to box 0.
+- **Fellowship:** Foundations + two role certificates issue the Fellow of the C-Suite Coach Institute (FCSCI) certificate
+  automatically (navy and gold design).
+- **Credentials** (`#credentials`): certificates, the path to Fellowship, Honour Roll opt-in. Certificate pages print to
+  PDF (landscape), copy the verification link, and "Add to LinkedIn" (for the holder).
+- **Profile:** name (printed on future certificates), job title, Honour Roll opt-in, theme, password reset.
+
+**For admins** (`#admin`; arkulinskis@gmail.com becomes an admin on first sign-in):
+- **Overview:** members, learners, modules completed, challenge attempts, examinations sat, credentials issued, feedback.
+- **Credentials:** search every certificate, revoke or reinstate (a revoked certificate shows a red REVOKED stamp).
+- **Feedback inbox**, **Users** (make admin, disable), **Demo data**: six fictional executives with progress and
+  certificates (sample records), on the Honour Roll; remove or reload.
+
+## Setting it up in Anvil (once)
+
+1. In the Anvil editor: **Create app → Clone from GitHub**, and paste `https://github.com/arkulinskis/csuitecoach`.
+2. **Users** service: email + password, sign-up allowed (already set in `anvil.yaml`; check it).
+3. Open the app in the editor. If it shows a **Schema Mismatch** alert, choose **"The schema of the source code is correct"** so Anvil creates the tables.
+4. **Run** it and sign up with **arkulinskis@gmail.com** straight away (that account becomes the admin).
+5. **Publish** (Publish → public URL, or your own domain).
+
+## Working on it
+
+See `.claude/skills/csuitecoach/SKILL.md`. In short:
+
+```
+python -I tools/check.py --ui                    # syntax, server tests, headless UI tests → ALL CHECKS PASSED
+python -I tools/preview/devserver.py 8765        # the app on in-memory data: http://localhost:8765/  (?as=ana#home, ?as=admin#admin)
+python tools/deploy.py                           # dry run (needs PyYAML, so no -I)
+python tools/deploy.py --push "Message"          # deploy: commit + push to GitHub, Anvil pulls it
+```
+
+## Project layout
+
+```
+web/            core.js/core.css (engine + Boardroom Classic tokens), app.js (header, footer, seal, icons),
+                pages/_shared.html (CS helpers: drill engine, certificate, hero, cards), pages/*.html
+client_code/    Main.py (the only Anvil form: bridge to the server, sign-in), legal.py
+server_code/    content_core.py, content_roles_a.py, content_roles_b.py, content_cases.py (the curriculum),
+                Curriculum.py, Learning.py, Exams.py, Credentials.py, Accounts.py, Admin.py, DemoData.py, Feedback.py, common.py
+assets/         icon.svg + PNG icons, ph-*.jpg stock photos (Pexels licence, served at _/theme/<name>)
+tools/          sync_to_anvil.py (settings + table schema), deploy.py, check.py, preview/ (dev server, UI tests, screenshots), testing/
+```
