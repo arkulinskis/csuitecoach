@@ -7,7 +7,7 @@ written boardroom challenges, sit a final examination, and earn certificates wit
 Institute is the app's own authority: the certificates say so honestly. Built on [Anvil](https://anvil.works).
 
 - **App repo:** github.com/arkulinskis/csuitecoach (branch `master`). Anvil pulls `master`.
-- **Live:** not yet published (to be filled in once the user publishes).
+- **Live:** https://csuite-coach.anvil.app
 - **The research** behind the content: `RESEARCH.md` in the project folder (not synced to the repo); every module and case also lists its sources.
 
 ## What it does
