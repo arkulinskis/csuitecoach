@@ -481,6 +481,7 @@
     footer: function (me) {
       var col = function (title, links) {
         return '<div class="ft-col"><h4>' + title + '</h4>' + links.map(function (l) {
+          if (l[0] === 'ext') return '<a href="' + l[2] + '" target="_blank" rel="noopener" data-prepsto-open>' + l[1] + '</a>';  // Prepsto feedback panel
           return l[0] === 'btn' ? '<button type="button" ' + l[2] + '>' + l[1] + '</button>' : '<a href="#' + l[0] + '" data-go="' + l[0] + '">' + l[1] + '</a>';
         }).join('') + '</div>';
       };
@@ -488,7 +489,7 @@
         '<div class="ft-brand">' + brand() + '<p class="muted small">' + esc(UI.config.tagline) + '</p></div>' +
         col('Programs', [['tracks', 'All programs'], ['tracks/core', 'Executive Foundations'], ['cases', 'The Casebook']]) +
         col('Credentials', [['verify', 'Verify a credential'], [me ? 'credentials' : 'landing', me ? 'Your credentials' : 'How certification works']]) +
-        col('Institute', [['landing', 'About'], ['btn', 'Send feedback', 'data-feedback'], ['btn', 'Privacy &amp; Terms', 'data-lk-open="overview"']]) +
+        col('Institute', [['landing', 'About'], ['ext', 'Suggest an idea', 'https://prepsto.com/#f/fha858r'], ['btn', 'Send feedback', 'data-feedback'], ['btn', 'Privacy &amp; Terms', 'data-lk-open="overview"']]) +
         '<div class="ft-seal" aria-hidden="true">' + UI.seal(76) + '</div>' +
         '<p class="ui-footer-legal small muted">© ' + new Date().getFullYear() + ' ' + esc(UI.config.institute) + '. A private executive-education program: its credentials are ' +
         'issued on its own authority and are not accredited academic qualifications. Case studies are drawn from public reporting. Photography: Pexels.</p></div>';
