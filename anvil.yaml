@@ -430,7 +430,7 @@ metadata:
   title: 'C-Suite Coach Institute: executive training and certificates'
 name: C-Suite Coach
 native_deps:
-  head_html: "<script src=\"_/theme/legal-kit.js?v=f1a157095f\"></script>\n<!-- seo:start (APP_MAKER/seo: edit seo/apps/csuitecoach.json\
+  head_html: "<script src=\"_/theme/legal-kit.js?v=eeb51a3c73\"></script>\n<!-- seo:start (APP_MAKER/seo: edit seo/apps/csuitecoach.json\
     \ and run seo.py, not here) -->\n<link rel=\"canonical\" href=\"https://csuite-coach.anvil.app/\">\n<meta name=\"robots\"\
     \ content=\"index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1\">\n<meta name=\"keywords\" content=\"\
     executive education online, C-suite training, CEO training program, CFO course, leadership certification, business case\
