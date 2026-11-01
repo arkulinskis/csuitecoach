@@ -424,16 +424,49 @@ db_schema:
     server: full
     title: Users
 metadata:
-  description: 'Executive training and certification for the C-suite: real case stories, scenario challenges and spaced-repetition
-    drills. Earn credentials from the C-Suite Coach Institute.'
+  description: 'Executive training for the C-suite: real business cases, boardroom challenges and spaced-repetition drills.
+    Earn C-Suite Coach Institute certificates.'
   logo_img: asset:icon-512.png
-  title: 'C-Suite Coach Institute: executive certification'
+  title: 'C-Suite Coach Institute: executive training and certificates'
 name: C-Suite Coach
 native_deps:
-  head_html: "<script src=\"_/theme/legal-kit.js?v=f1a157095f\"></script>\n<meta name=\"viewport\" content=\"width=device-width,\
-    \ initial-scale=1, viewport-fit=cover\">\n<meta name=\"theme-color\" content=\"#14213d\">\n<meta name=\"apple-mobile-web-app-capable\"\
-    \ content=\"yes\">\n<link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\n<link rel=\"preconnect\" href=\"\
-    https://fonts.gstatic.com\" crossorigin>\n<link href=\"https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Inter:wght@400;500;600;700&display=swap\"\
+  head_html: "<script src=\"_/theme/legal-kit.js?v=f1a157095f\"></script>\n<!-- seo:start (APP_MAKER/seo: edit seo/apps/csuitecoach.json\
+    \ and run seo.py, not here) -->\n<link rel=\"canonical\" href=\"https://csuite-coach.anvil.app/\">\n<meta name=\"robots\"\
+    \ content=\"index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1\">\n<meta name=\"keywords\" content=\"\
+    executive education online, C-suite training, CEO training program, CFO course, leadership certification, business case\
+    \ studies, executive coaching app, aspiring executive, board decision making\">\n<meta name=\"author\" content=\"Arkvital\"\
+    >\n<meta property=\"og:type\" content=\"website\">\n<meta property=\"og:site_name\" content=\"C-Suite Coach\">\n<meta\
+    \ property=\"og:title\" content=\"C-Suite Coach Institute: executive training and certificates\">\n<meta property=\"og:description\"\
+    \ content=\"Executive training for the C-suite: real business cases, boardroom challenges and spaced-repetition drills.\
+    \ Earn C-Suite Coach Institute certificates.\">\n<meta property=\"og:locale\" content=\"en_CA\">\n<meta property=\"og:url\"\
+    \ content=\"https://csuite-coach.anvil.app/\">\n<meta property=\"og:image\" content=\"https://csuite-coach.anvil.app/_/theme/og-image.png\"\
+    >\n<meta property=\"og:image:width\" content=\"1200\"><meta property=\"og:image:height\" content=\"630\">\n<meta property=\"\
+    og:image:alt\" content=\"C-Suite Coach: Executive training for current and aspiring C-suite leaders\">\n<meta name=\"\
+    twitter:card\" content=\"summary_large_image\">\n<meta name=\"twitter:title\" content=\"C-Suite Coach Institute: executive\
+    \ training and certificates\">\n<meta name=\"twitter:description\" content=\"Executive training for the C-suite: real\
+    \ business cases, boardroom challenges and spaced-repetition drills. Earn C-Suite Coach Institute certificates.\">\n<meta\
+    \ name=\"twitter:image\" content=\"https://csuite-coach.anvil.app/_/theme/og-image.png\">\n<link rel=\"alternate\" type=\"\
+    text/plain\" title=\"C-Suite Coach for AI assistants\" href=\"https://csuite-coach.anvil.app/llms.txt\">\n<script type=\"\
+    application/ld+json\">{\"@context\": \"https://schema.org\", \"@graph\": [{\"@type\": \"WebApplication\", \"@id\": \"\
+    https://csuite-coach.anvil.app/#app\", \"name\": \"C-Suite Coach\", \"url\": \"https://csuite-coach.anvil.app/\", \"description\"\
+    : \"Executive training for the C-suite: real business cases, boardroom challenges and spaced-repetition drills. Earn C-Suite\
+    \ Coach Institute certificates.\", \"image\": \"https://csuite-coach.anvil.app/_/theme/og-image.png\", \"inLanguage\"\
+    : \"en\", \"publisher\": {\"@id\": \"https://arkvital.com/#org\"}, \"keywords\": \"executive education online, C-suite\
+    \ training, CEO training program, CFO course, leadership certification, business case studies, executive coaching app,\
+    \ aspiring executive, board decision making\", \"applicationCategory\": \"EducationalApplication\", \"operatingSystem\"\
+    : \"Any (web browser)\", \"browserRequirements\": \"Requires JavaScript and a modern web browser\", \"featureList\": [\"\
+    Seven programs: Executive Foundations plus six role programs\", \"Module briefings with Do and Avoid lists and sources\"\
+    , \"A casebook of 24 real, sourced business cases\", \"Spaced-repetition drills\", \"Written boardroom challenges and\
+    \ a final examination\", \"Certificates with public verification codes\"], \"audience\": {\"@type\": \"Audience\", \"\
+    audienceType\": \"Current and aspiring CEOs, CFOs, COOs, CHROs, CTOs, CIOs, CISOs and CMOs\"}}, {\"@type\": \"WebSite\"\
+    , \"@id\": \"https://csuite-coach.anvil.app/#site\", \"url\": \"https://csuite-coach.anvil.app/\", \"name\": \"C-Suite\
+    \ Coach\", \"publisher\": {\"@id\": \"https://arkvital.com/#org\"}}, {\"@type\": \"Organization\", \"@id\": \"https://arkvital.com/#org\"\
+    , \"name\": \"Arkvital\", \"url\": \"https://arkvital.com\", \"email\": \"arkvital@outlook.com\", \"address\": {\"@type\"\
+    : \"PostalAddress\", \"addressLocality\": \"Montreal\", \"addressRegion\": \"QC\", \"addressCountry\": \"CA\"}}]}</script>\n\
+    <!-- seo:end -->\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, viewport-fit=cover\">\n<meta\
+    \ name=\"theme-color\" content=\"#14213d\">\n<meta name=\"apple-mobile-web-app-capable\" content=\"yes\">\n<link rel=\"\
+    preconnect\" href=\"https://fonts.googleapis.com\">\n<link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin>\n\
+    <link href=\"https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Inter:wght@400;500;600;700&display=swap\"\
     \ rel=\"stylesheet\">\n<link id=\"ui-favicon\" rel=\"icon\" type=\"image/svg+xml\" href=\"_/theme/icon.svg?v=e6072b1491\"\
     >\n<link rel=\"apple-touch-icon\" href=\"_/theme/icon-180.png?v=e6072b1491\">\n<script>\n/* Keep our tab icon: Anvil adds\
     \ its own <link rel=\"icon\">, so drop any other icon link. */\n(function () {\n  function keep() {\n    var ours = document.getElementById('ui-favicon');\n\
