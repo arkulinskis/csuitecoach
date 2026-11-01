@@ -1307,13 +1307,14 @@
     var primary = me ? '<a class="ui-btn gold lg" href="#home" data-go="home">Go to your dashboard ' + UI.icon('arrow') + '</a><a class="ui-btn lg ghostl" href="#tracks" data-go="tracks">Programs</a>'
       : '<a class="ui-btn gold lg" href="#auth/signup" data-go="auth/signup">Enrol, free ' + UI.icon('arrow') + '</a><a class="ui-btn lg ghostl" href="#tracks" data-go="tracks">Explore the programs</a>';
     view.innerHTML =
-      '<section class="lp-hero"><div class="bg"></div><div class="in"><div>' +
+      '<section class="lp-hero"><div class="bg"></div><div class="in"><div class="lp-copy">' +
         '<div class="eyebrow">C-Suite Coach Institute · Executive certification</div>' +
         '<h1>The standard for <em>executive judgement</em>.</h1>' +
         '<p class="lp-lead">Seven certification programs for current and aspiring C-suite leaders. Learn from real boardroom cases, practise decisions in scenario challenges, and lock it in with spaced-repetition drills. Earn credentials anyone can verify.</p>' +
         '<div class="lp-cta">' + primary + '</div>' +
         '<div class="lp-proof"><div><b data-n="tracks">7</b><span>Programs</span></div><div><b data-n="cases">24</b><span>Case files</span></div><div><b data-n="items">200+</b><span>Drills</span></div><div><b data-n="challenges">31</b><span>Challenges</span></div></div>' +
       '</div><div class="lp-art" aria-hidden="true"><div class="mini"><div class="cs-cert-wrap" data-wrap>' + CS.cert(SAMPLE) + '</div></div>' +
+        '<div class="lp-verify">' + UI.icon('check') + '<span>Verified on the Institute\'s register</span><code>' + esc(SAMPLE.code) + '</code></div>' +
         '<div class="chip">' + UI.icon('check') + '<div><b>Challenge passed · 86%</b>Two Days Before the Board</div></div>' +
         '<div class="chip chip2">' + UI.icon('flame') + '<div><b>12-day streak</b>Daily review done</div></div></div></div></section>' +
 
