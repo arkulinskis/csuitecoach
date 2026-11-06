@@ -475,7 +475,7 @@
         }).join('') + '</div>';
       };
       return '<div class="ui-footer-in ft">' +
-        '<div class="ft-brand">' + brand() + '<p class="muted small">' + esc(UI.config.tagline) + '</p></div>' +
+        '<div class="ft-brand">' + brand() + '<p class="muted small">' + esc(UI.config.tagline) + '</p><p class="small muted ui-footer-org">Contact developer: <a href="https://arkvital.com" target="_blank" rel="noopener">arkvital.com</a><br>Parent company: <a href="https://addanapp.com" target="_blank" rel="noopener">addanapp.com</a></p></div>' +
         col('Programs', [['tracks', 'All programs'], ['tracks/core', 'Executive Foundations'], ['cases', 'The Casebook']]) +
         col('Credentials', [['verify', 'Verify a credential'], [me ? 'credentials' : 'landing', me ? 'Your credentials' : 'How certification works']]) +
         col('Institute', [['landing', 'About'], ['ext', 'Submit feedback', 'https://prepsto.com/#f/fha858r'], ['btn', 'Privacy &amp; Terms', 'data-lk-open="overview"']]) +
