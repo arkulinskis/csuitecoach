@@ -1,0 +1,17 @@
+---
+custom_component: true
+properties:
+  - name: items
+    type: object
+    default_value: []
+    description: The examiners' criteria (a list of strings)
+    default_binding_prop: true
+toolbox_item:
+  title: Rubric
+  group: C-Suite Coach
+help_text: |
+  The examiners' criteria as tick boxes (self-assessed). value() gives a list of True/False, one per criterion.
+---
+<div class="cs-rubric-host">
+  <anvil-component type="RepeatingPanel" name="panel" prop:item_template="C_Suite_Coach.Items.RubricRow" prop:role='["cs-rubric"]'></anvil-component>
+</div>

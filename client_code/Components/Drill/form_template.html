@@ -1,0 +1,39 @@
+---
+custom_component: true
+toolbox_item:
+  title: Drill (flashcards)
+  group: C-Suite Coach
+help_text: |
+  The flashcard engine for study sessions and the examination's recall round (the old CS.drill), in Python.
+  Call start(items, exam=False, rate=fn(item, knew), done=fn(stats)).
+---
+<div class="cs-drill-host">
+  <div class="cs-drill">
+    <div class="top">
+      <anvil-component type="C_Suite_Coach.Components.Bar" name="bar" prop:label="Drills answered"></anvil-component>
+      <span class="count" anvil:dom-node="count"></span>
+    </div>
+    <article class="cs-card" anvil:name="card">
+      <div class="kind">
+        <span class="ui-badge gold" anvil:name="b_advice"><i class="ic ic-scale"></i>Advice call</span>
+        <span class="ui-badge brand" anvil:name="b_recall"><i class="ic ic-cards"></i>Recall</span>
+        <span class="ui-badge" anvil:dom-node="b_mod"></span>
+        <span class="ui-badge good" anvil:name="b_box"><span anvil:dom-node="box_n"></span></span>
+        <span class="ui-badge warn" anvil:name="b_new">New</span>
+      </div>
+      <p class="q" anvil:dom-node="q"></p>
+      <p class="prompt" anvil:dom-node="prompt"></p>
+      <div class="back" anvil:name="back">
+        <span class="verdict" anvil:name="verdict"><i class="ic" anvil:dom-node="verdict_ic"></i><span anvil:dom-node="verdict_t"></span></span>
+        <p class="a" anvil:dom-node="a"></p>
+        <p class="note" anvil:dom-node="note"></p>
+      </div>
+      <div class="actions">
+        <anvil-component type="Button" name="reveal_button" prop:text="Reveal the answer" prop:role='["btn", "btn-primary", "btn-lg", "btn-block"]'></anvil-component>
+        <anvil-component type="Button" name="no_button" prop:text="Still learning" prop:role='["btn", "cs-rate-no", "ic-refresh"]'></anvil-component>
+        <anvil-component type="Button" name="yes_button" prop:text="Got it" prop:role='["btn", "cs-rate-yes", "ic-check"]'></anvil-component>
+      </div>
+      <div class="keys" anvil:dom-node="keys"></div>
+    </article>
+  </div>
+</div>

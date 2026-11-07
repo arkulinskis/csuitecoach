@@ -1,0 +1,62 @@
+<anvil-form layout="C_Suite_Coach.Layouts.Shell">
+  <anvil-block slot="content">
+    <div class="ch">
+      <anvil-component type="C_Suite_Coach.Components.Hero" name="hero"></anvil-component>
+      <div class="ui-wrap" anvil:name="body">
+        <div class="ch-layout">
+          <div>
+            <div class="ch-brief">
+              <h2 class="cs-ph">The situation</h2>
+              <p class="sit" anvil:dom-node="situation"></p>
+              <p class="ask" anvil:dom-node="ask"></p>
+            </div>
+            <div class="ch-form ui-stack" anvil:name="write_part">
+              <label class="ui-field"><span>Your decision <em>(write it as you would brief your board)</em></span>
+                <anvil-component type="TextArea" name="answer_box" prop:placeholder="What do you decide, who do you involve, in what order, and why?" prop:role='["ch-answer"]'></anvil-component>
+              </label>
+              <div class="ui-row between">
+                <span class="small muted">Commit to an answer before you see the examiners&rsquo; notes.</span>
+                <anvil-component type="Button" name="submit_button" prop:text="Submit and compare" prop:role='["btn", "btn-primary", "ic-arrow"]'></anvil-component>
+              </div>
+            </div>
+            <div class="ch-model" anvil:name="model_part">
+              <h3>Your answer</h3>
+              <div class="mine" anvil:dom-node="mine"></div>
+              <h3>The examiners&rsquo; model answer</h3>
+              <p class="model" anvil:dom-node="model"></p>
+              <h3>Tick what your answer covered</h3>
+              <anvil-component type="C_Suite_Coach.Components.Rubric" name="rubric"></anvil-component>
+              <div class="ui-row between ch-actions" anvil:name="score_actions">
+                <anvil-component type="Button" name="edit_button" prop:text="Edit my answer" prop:role='["btn", "btn-ghost", "ic-edit"]'></anvil-component>
+                <anvil-component type="Button" name="record_button" prop:text="Record my score" prop:role='["btn", "btn-primary", "ic-check"]'></anvil-component>
+              </div>
+              <div class="ch-result" anvil:name="result_box">
+                <h3 anvil:dom-node="res_head"></h3>
+                <div class="pct" anvil:dom-node="res_pct"></div>
+                <p class="small" anvil:dom-node="res_text"></p>
+                <div class="ui-row ch-res-actions">
+                  <a class="ui-btn" anvil:dom-node="res_back">Back to the module</a>
+                  <anvil-component type="Button" name="retry_button" prop:text="Try again" prop:role='["btn", "btn-primary", "ic-refresh"]'></anvil-component>
+                </div>
+              </div>
+            </div>
+          </div>
+          <aside class="ui-stack">
+            <div class="ui-card">
+              <h2 class="cs-ph">How it&rsquo;s scored</h2>
+              <p class="small muted" anvil:dom-node="how"></p>
+            </div>
+            <div class="ui-card">
+              <h2 class="cs-ph">Your attempts</h2>
+              <anvil-component type="RepeatingPanel" name="attempts_panel" prop:item_template="C_Suite_Coach.Items.AttemptRow" prop:role='["ch-hist"]'></anvil-component>
+              <p class="muted small" anvil:name="no_attempts">No attempts yet.</p>
+            </div>
+          </aside>
+        </div>
+      </div>
+      <div class="ui-wrap ui-narrow" anvil:name="missing_part">
+        <div class="ui-empty"><i class="ic ic-alert"></i><h2>That challenge doesn&rsquo;t exist</h2><a class="ui-btn primary" href="#tracks">All programs</a></div>
+      </div>
+    </div>
+  </anvil-block>
+</anvil-form>

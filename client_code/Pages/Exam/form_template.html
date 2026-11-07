@@ -1,0 +1,114 @@
+<anvil-form layout="C_Suite_Coach.Layouts.Shell">
+  <anvil-block slot="content">
+    <div class="ex">
+      <anvil-component type="C_Suite_Coach.Components.Hero" name="hero"></anvil-component>
+      <div class="ui-wrap">
+        <div class="ex-wrap" anvil:name="intro_part">
+          <div class="ex-paper">
+            <h2>Instructions: two parts, one sitting</h2>
+            <p class="muted">Allow about 30 minutes. Answer from memory: no notes, no briefings, no searching.</p>
+            <div class="ex-rules">
+              <div><b anvil:dom-node="r1n"></b><span anvil:dom-node="r1"></span></div>
+              <div><b>1</b><span anvil:dom-node="r2"></span></div>
+              <div><b anvil:dom-node="r3n"></b><span anvil:dom-node="r3"></span></div>
+            </div>
+            <label class="ui-check ex-honour"><input type="checkbox" anvil:dom-node="honour"><span><b>Honour code.</b> I will answer from memory without notes or help, and score myself strictly against the criteria. I understand my credential will carry my name and a public verification code.</span></label>
+            <div class="ui-row end">
+              <a class="ui-btn ghost" anvil:dom-node="not_now">Not now</a>
+              <anvil-component type="Button" name="begin_button" prop:text="Begin the examination" prop:enabled="false" prop:role='["btn", "btn-primary", "btn-lg", "ic-pen"]'></anvil-component>
+            </div>
+          </div>
+        </div>
+
+        <div anvil:name="part1">
+          <div class="ex-part"><span class="pill">Part I</span><h2>Recall round</h2></div>
+          <anvil-component type="C_Suite_Coach.Components.Drill" name="drill"></anvil-component>
+        </div>
+
+        <div class="ex-wrap" anvil:name="part2">
+          <div class="ex-part ex-part-wide"><span class="pill">Part II</span><h2 anvil:dom-node="cap_title"></h2></div>
+          <div class="ex-paper">
+            <h3>The situation</h3>
+            <p class="ex-sit" anvil:dom-node="cap_sit"></p>
+            <p class="ex-ask" anvil:dom-node="cap_ask"></p>
+            <div class="ui-stack" anvil:name="write_part">
+              <label class="ui-field"><span>Your plan, in the order you would act</span>
+                <anvil-component type="TextArea" name="answer_box" prop:placeholder="Your plan, in the order you would act." prop:role='["ex-answer"]'></anvil-component>
+              </label>
+              <div class="ui-row end">
+                <anvil-component type="Button" name="write_button" prop:text="Submit answer and see the criteria" prop:role='["btn", "btn-primary", "ic-arrow"]'></anvil-component>
+              </div>
+            </div>
+            <div anvil:name="mark_part">
+              <h3>Your answer</h3>
+              <div class="ex-mine" anvil:dom-node="mine"></div>
+              <h3>The examiners&rsquo; model answer</h3>
+              <p class="ex-model" anvil:dom-node="model"></p>
+              <h3>Tick each criterion your answer met</h3>
+              <anvil-component type="C_Suite_Coach.Components.Rubric" name="rubric"></anvil-component>
+              <div class="ui-row end ex-final">
+                <anvil-component type="Button" name="final_button" prop:text="Submit to the Board of Examiners" prop:role='["btn", "btn-gold", "btn-lg", "ic-award"]'></anvil-component>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ex-wrap" anvil:name="result_part">
+          <div class="ex-paper ex-center">
+            <h2 anvil:dom-node="res_head"></h2>
+            <div class="ex-scores">
+              <div><b anvil:dom-node="res_drill"></b><span anvil:dom-node="res_drill_l"></span></div>
+              <div><b anvil:dom-node="res_scen"></b><span anvil:dom-node="res_scen_l"></span></div>
+            </div>
+            <div anvil:name="passed_box">
+              <div class="ex-cert"><anvil-component type="C_Suite_Coach.Components.Certificate" name="new_cert"></anvil-component></div>
+              <p class="ui-note" anvil:name="fellow_note"><i class="ic ic-star"></i> You now hold Foundations and two role certificates: you have been admitted as a <b>Fellow of the Institute</b>. <a anvil:dom-node="fellow_a">See your Fellowship certificate</a>.</p>
+              <div class="ui-row ex-links">
+                <a class="ui-btn primary" anvil:dom-node="open_cert"><i class="ic ic-award"></i>Open your certificate</a>
+                <a class="ui-btn" href="#credentials">All credentials</a>
+              </div>
+            </div>
+            <div anvil:name="failed_box">
+              <p class="muted" anvil:dom-node="fail_text"></p>
+              <div class="ui-row ex-links">
+                <a class="ui-btn primary" href="#study/review"><i class="ic ic-cards"></i>Review now</a>
+                <a class="ui-btn" anvil:dom-node="back_track">Back to the program</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ex-wrap" anvil:name="other_part">
+          <div class="ex-paper ex-center" anvil:name="certified_box">
+            <h2 anvil:dom-node="cert_head"></h2>
+            <a class="ui-btn primary" anvil:dom-node="cert_link"><i class="ic ic-award"></i>View certificate</a>
+          </div>
+          <div class="ex-paper ex-center" anvil:name="cooldown_box">
+            <h2 anvil:dom-node="wait_head"></h2>
+            <p class="muted">Use the time to review: missed drills from your last sitting are due now.</p>
+            <a class="ui-btn primary" href="#study/review"><i class="ic ic-cards"></i>Review now</a>
+          </div>
+          <div class="ex-paper" anvil:name="locked_box">
+            <h2>Not yet open: complete every module first</h2>
+            <p class="muted" anvil:dom-node="locked_text"></p>
+            <anvil-component type="RepeatingPanel" name="missing_panel" prop:item_template="C_Suite_Coach.Items.ModuleLink" prop:role='["ui-list-panel"]'></anvil-component>
+          </div>
+        </div>
+
+        <div class="ex-wrap" anvil:name="hist_part">
+          <div class="ui-card ex-hist-card">
+            <h2 class="cs-ph">Previous sittings</h2>
+            <div class="ex-hist">
+              <div class="ex-row ex-head"><span>Date</span><span>Recall</span><span>Capstone</span><span>Result</span></div>
+              <anvil-component type="RepeatingPanel" name="hist_panel" prop:item_template="C_Suite_Coach.Items.ExamRow" prop:role='["contents"]'></anvil-component>
+            </div>
+          </div>
+        </div>
+
+        <div class="ui-narrow" anvil:name="missing_part">
+          <div class="ui-empty"><i class="ic ic-alert"></i><h2>That program doesn&rsquo;t exist</h2><a class="ui-btn primary" href="#tracks">All programs</a></div>
+        </div>
+      </div>
+    </div>
+  </anvil-block>
+</anvil-form>

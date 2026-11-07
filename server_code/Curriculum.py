@@ -36,7 +36,7 @@ def _add_track(track, modules, capstone):
     TRACK_BY_ID[t["id"]] = t
     CHALLENGES[t["capstone"]["id"]] = t["capstone"]
     for n, m in enumerate(modules, 1):
-        m = dict(m, track=t["id"], n=n)
+        m: dict = dict(m, track=t["id"], n=n)
         MODULES[m["id"]] = m
         for i, (q, a, note) in enumerate(m["cards"], 1):
             ITEMS["%s:c%d" % (m["id"], i)] = {"id": "%s:c%d" % (m["id"], i), "kind": "card", "module": m["id"], "track": t["id"],

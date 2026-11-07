@@ -1,0 +1,19 @@
+---
+custom_component: true
+properties:
+  - name: size
+    type: number
+    default_value: 120
+    description: Width and height in pixels
+    default_binding_prop: true
+  - name: decorative
+    type: boolean
+    default_value: false
+    description: Hidden from screen readers (when the words around it already say it)
+toolbox_item:
+  title: Institute seal
+  group: C-Suite Coach
+help_text: |
+  The C-Suite Coach Institute's gold seal, drawn by CS.seal in theme/assets/cs-cert.js.
+---
+<span class="cs-seal-host"><span class="cs-seal-box" anvil:dom-node="box"></span></span>

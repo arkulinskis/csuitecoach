@@ -1,0 +1,49 @@
+<anvil-form layout="C_Suite_Coach.Layouts.Shell">
+  <anvil-block slot="content">
+    <div class="ui-wrap ui-narrow">
+      <div class="pf-head">
+        <anvil-component type="Label" name="initials" prop:role='["pf-avatar"]'></anvil-component>
+        <div>
+          <anvil-component type="Label" name="name_title" prop:role='["pf-title"]'></anvil-component>
+          <anvil-component type="Label" name="rank_line" prop:role='["pf-rank"]'></anvil-component>
+          <anvil-component type="Label" name="email_line" prop:role='["fine-print"]'></anvil-component>
+        </div>
+      </div>
+      <div class="pf-grid">
+        <div class="ui-card ui-stack">
+          <h2 class="cs-ph">Your details</h2>
+          <label class="ui-field"><span>Full name <em>(printed on certificates you earn from now on)</em></span>
+            <anvil-component type="TextBox" name="name_box"></anvil-component>
+          </label>
+          <label class="ui-field"><span>Job title <em>(optional, shown on the Honour Roll)</em></span>
+            <anvil-component type="TextBox" name="title_box" prop:placeholder="e.g. VP Finance"></anvil-component>
+          </label>
+          <anvil-component type="CheckBox" name="honour_box" prop:text="Show me on the public Honour Roll once I&rsquo;m certified" prop:role='["cs-check"]'></anvil-component>
+          <anvil-component type="Button" name="save_button" prop:text="Save" prop:role='["btn", "btn-primary"]'></anvil-component>
+        </div>
+        <div class="ui-card ui-stack">
+          <h2 class="cs-ph">Appearance</h2>
+          <p class="muted small">Follow your device, or pick one.</p>
+          <div class="ui-seg" role="group" aria-label="Appearance">
+            <button type="button" anvil:name="theme_auto" data-theme-pick="auto" anvil:on-dom:click="self.theme_click">Auto</button>
+            <button type="button" anvil:name="theme_light" data-theme-pick="light" anvil:on-dom:click="self.theme_click">Light</button>
+            <button type="button" anvil:name="theme_dark" data-theme-pick="dark" anvil:on-dom:click="self.theme_click">Dark</button>
+          </div>
+          <h2 class="cs-ph pf-pw">Password</h2>
+          <p class="muted small">We&rsquo;ll email you a link to choose a new one.</p>
+          <anvil-component type="Button" name="reset_button" prop:text="Email me a reset link" prop:role='["btn", "ic-mail"]'></anvil-component>
+        </div>
+      </div>
+      <div class="ui-card pf-more">
+        <div class="pf-links">
+          <a href="#credentials"><i class="ic ic-award"></i>Your credentials</a>
+          <a href="#cases"><i class="ic ic-book"></i>The Casebook</a>
+          <a href="#admin" anvil:name="admin_link"><i class="ic ic-shield"></i>Admin</a>
+          <button type="button" anvil:on-dom:click="self.feedback_click"><i class="ic ic-chat"></i>Submit feedback</button>
+          <button type="button" data-lk-open="overview"><i class="ic ic-lock"></i>Privacy &amp; Terms, and your data</button>
+          <button type="button" anvil:on-dom:click="self.sign_out_click"><i class="ic ic-logout"></i>Sign out</button>
+        </div>
+      </div>
+    </div>
+  </anvil-block>
+</anvil-form>

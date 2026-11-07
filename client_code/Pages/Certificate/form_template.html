@@ -1,0 +1,42 @@
+<anvil-form layout="C_Suite_Coach.Layouts.Shell">
+  <anvil-block slot="content">
+    <div class="ce-page">
+      <div class="ce-in" anvil:name="found_part">
+        <div class="ce-top no-print">
+          <div><h1 anvil:dom-node="title"></h1><p class="ce-sub">A C-Suite Coach Institute certificate</p></div>
+          <div class="ui-row">
+            <anvil-component type="Button" name="copy_button" prop:text="Copy link" prop:role='["btn", "ic-link"]'></anvil-component>
+            <a class="ui-btn" target="_blank" rel="noopener" anvil:dom-node="linkedin_a"><i class="ic ic-external"></i>Add to LinkedIn</a>
+            <anvil-component type="Button" name="print_button" prop:text="Print or save PDF" prop:role='["btn", "btn-gold", "ic-print"]'></anvil-component>
+          </div>
+        </div>
+        <anvil-component type="C_Suite_Coach.Components.Certificate" name="cert"></anvil-component>
+        <div class="no-print">
+          <div class="ce-status" anvil:name="valid_box">
+            <span class="ok"><i class="ic ic-shield"></i></span>
+            <div><h2>Valid credential</h2><p class="muted" anvil:dom-node="valid_text"></p></div>
+          </div>
+          <div class="ce-status" anvil:name="revoked_box">
+            <span class="no"><i class="ic ic-alert"></i></span>
+            <div><h2>This credential has been revoked</h2><p class="muted">It is no longer valid.</p></div>
+          </div>
+          <dl class="ce-detail">
+            <div><dt>Holder</dt><dd anvil:dom-node="holder"></dd></div>
+            <div><dt>Credential ID</dt><dd anvil:dom-node="code"></dd></div>
+            <div><dt>Issued</dt><dd anvil:dom-node="issued"></dd></div>
+            <div><dt>Program</dt><dd anvil:dom-node="program"></dd></div>
+          </dl>
+          <div class="ui-card ce-outcomes" anvil:name="outcomes_card">
+            <h2 class="cs-ph">The holder has demonstrated the ability to</h2>
+            <anvil-component type="RepeatingPanel" name="outcomes_panel" prop:item_template="C_Suite_Coach.Items.Bullet" prop:role='["cs-list"]'></anvil-component>
+          </div>
+          <p class="small muted ce-note">C-Suite Coach Institute is a private executive-education program. Its credentials are issued on its own authority and are not accredited academic qualifications.</p>
+        </div>
+      </div>
+      <div class="ui-wrap ui-narrow" anvil:name="missing_part">
+        <div class="ui-empty"><i class="ic ic-alert"></i><h1 class="ce-missing">No credential with that ID</h1><p anvil:dom-node="missing_text">Check the code and try again.</p>
+          <a class="ui-btn primary" href="#verify">Verify a credential</a></div>
+      </div>
+    </div>
+  </anvil-block>
+</anvil-form>

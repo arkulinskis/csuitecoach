@@ -1,0 +1,19 @@
+---
+custom_component: true
+properties:
+  - name: pct
+    type: number
+    default_value: 0
+    description: Progress, 0 to 100
+    default_binding_prop: true
+  - name: label
+    type: string
+    default_value: "Progress"
+    description: What the bar measures (read out by screen readers)
+toolbox_item:
+  title: Progress bar
+  group: C-Suite Coach
+help_text: |
+  A thin navy-to-gold progress bar. The fill grows with a transform (no layout animation).
+---
+<div class="cs-bar-host"><div class="cs-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" anvil:dom-node="bar"><i anvil:dom-node="fill"></i></div></div>

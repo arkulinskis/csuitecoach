@@ -1,0 +1,54 @@
+---
+custom_component: true
+properties:
+  - name: photo
+    type: string
+    default_value: "ph-boardroom"
+    description: The photo behind the band (a theme/assets/ph-*.jpg name)
+  - name: title
+    type: string
+    default_value: ""
+    description: The page's heading (the page's only h1)
+    default_binding_prop: true
+  - name: lead
+    type: string
+    default_value: ""
+    description: One paragraph under the heading (empty = none)
+  - name: crumbs
+    type: object
+    default_value: []
+    description: "Breadcrumbs: a list of [href or None, label]"
+  - name: meta
+    type: object
+    default_value: []
+    description: "Facts under the lead: a list of [icon name, text]"
+  - name: actions
+    type: object
+    default_value: []
+    description: "Buttons: a list of dicts {text, href, kind, size, icon, after} (Items.LinkButton)"
+toolbox_item:
+  title: Photo hero band
+  group: C-Suite Coach
+help_text: |
+  The navy duotone photo band at the top of a page (the old CS.hero): breadcrumbs, a gold rule, the heading, a lead,
+  facts with icons and buttons.
+---
+<div class="cs-hero-host">
+  <section class="cs-hero">
+    <div class="ph" anvil:dom-node="ph"></div>
+    <div class="in">
+      <nav class="crumbs" aria-label="Breadcrumb" anvil:name="crumbs_box">
+        <anvil-component type="RepeatingPanel" name="crumbs_panel" prop:item_template="C_Suite_Coach.Items.Crumb" prop:role='["contents"]'></anvil-component>
+      </nav>
+      <div class="gold-rule" aria-hidden="true"></div>
+      <h1 anvil:dom-node="h1"></h1>
+      <p class="lead" anvil:dom-node="lead"></p>
+      <div class="meta" anvil:name="meta_box">
+        <anvil-component type="RepeatingPanel" name="meta_panel" prop:item_template="C_Suite_Coach.Items.MetaItem" prop:role='["contents"]'></anvil-component>
+      </div>
+      <div class="ui-row hero-actions" anvil:name="actions_box">
+        <anvil-component type="RepeatingPanel" name="actions_panel" prop:item_template="C_Suite_Coach.Items.LinkButton" prop:role='["contents"]'></anvil-component>
+      </div>
+    </div>
+  </section>
+</div>

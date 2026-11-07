@@ -199,7 +199,7 @@ def rate_item(item_id, knew, client_day=None):
         if box > 0:
             r["lapses"] = (r["lapses"] or 0) + 1
         box = 0
-    r.update(box=box, due=day + dt.timedelta(days=BOX_DAYS[box]), reviews=(r["reviews"] or 0) + 1, last=C.now())
+    r.update(box=box, due=day + dt.timedelta(days=BOX_DAYS[int(box)]), reviews=(r["reviews"] or 0) + 1, last=C.now())
     add_xp(me, XP_GOT if knew else XP_AGAIN, day)
     module_id = K.ITEMS[item_id]["module"]
     done = check_complete(me, module_id, day)

@@ -1,0 +1,71 @@
+<anvil-form layout="C_Suite_Coach.Layouts.Shell">
+  <anvil-block slot="content">
+    <div class="md">
+      <anvil-component type="C_Suite_Coach.Components.Hero" name="hero"></anvil-component>
+      <div class="ui-wrap" anvil:name="body">
+        <div class="md-layout">
+          <article>
+            <h2 class="md-h">The briefing</h2>
+            <anvil-component type="RepeatingPanel" name="brief_panel" prop:item_template="C_Suite_Coach.Items.Para" prop:role='["md-brief"]'></anvil-component>
+            <section class="md-sec">
+              <h2>Sound advice, and traps</h2>
+              <div class="cs-dd">
+                <div class="good"><h3><i class="ic ic-check"></i>Do</h3>
+                  <anvil-component type="RepeatingPanel" name="do_panel" prop:item_template="C_Suite_Coach.Items.DoItem" prop:role='["cs-dd-list"]'></anvil-component></div>
+                <div class="bad"><h3><i class="ic ic-x"></i>Avoid</h3>
+                  <anvil-component type="RepeatingPanel" name="dont_panel" prop:item_template="C_Suite_Coach.Items.DoItem" prop:role='["cs-dd-list"]'></anvil-component></div>
+              </div>
+            </section>
+            <section class="md-sec" anvil:name="cases_sec">
+              <h2>Case files</h2>
+              <anvil-component type="RepeatingPanel" name="cases_panel" prop:item_template="C_Suite_Coach.Items.CaseCard" prop:role='["md-cases"]'></anvil-component>
+            </section>
+            <section class="md-sec">
+              <h2>Sources</h2>
+              <anvil-component type="RepeatingPanel" name="sources_panel" prop:item_template="C_Suite_Coach.Items.SourceLink" prop:role='["md-sources"]'></anvil-component>
+              <p class="small muted md-note">Summaries are the Institute&rsquo;s own. Read the originals for full detail.</p>
+            </section>
+            <div class="md-read" anvil:name="read_box">
+              <div><b>Finished reading?</b><div class="small muted">Mark the briefing as read, then start the drills.</div></div>
+              <anvil-component type="Button" name="read_drill_button" prop:text="Mark as read and drill" prop:role='["btn", "btn-primary", "ic-check"]'></anvil-component>
+            </div>
+          </article>
+          <aside>
+            <div class="ui-card md-steps md-guest" anvil:name="guest_card">
+              <h2 class="cs-ph">Earn this module</h2>
+              <p class="muted small" anvil:dom-node="guest_text"></p>
+              <a class="ui-btn primary block" href="#auth/signup">Enrol, free</a>
+            </div>
+            <div class="md-steps" anvil:name="steps_card">
+              <div class="ui-card">
+                <div class="ui-row between"><h2 class="cs-ph" anvil:dom-node="mod_of"></h2>
+                  <anvil-component type="C_Suite_Coach.Components.Ring" name="ring" prop:size="50"></anvil-component></div>
+                <div class="md-complete" anvil:name="complete_box"><i class="ic ic-award"></i><h3>Module complete</h3><p class="small muted">Keep reviewing the drills as they come due.</p></div>
+                <div class="md-step" anvil:name="step1">
+                  <span class="dot" anvil:dom-node="dot1"></span>
+                  <div><b>Read the briefing</b><p>The research, the advice and the cases.</p>
+                    <anvil-component type="Button" name="read_button" prop:text="Mark as read" prop:role='["btn", "btn-sm", "ic-check"]'></anvil-component></div>
+                </div>
+                <div class="md-step" anvil:name="step2">
+                  <span class="dot" anvil:dom-node="dot2"></span>
+                  <div><b anvil:dom-node="drill_title"></b><p anvil:dom-node="drill_text"></p>
+                    <anvil-component type="C_Suite_Coach.Components.Bar" name="drill_bar" prop:label="Drills learned"></anvil-component>
+                    <a class="ui-btn sm md-go" anvil:dom-node="drill_link"></a></div>
+                </div>
+                <div class="md-step" anvil:name="step3">
+                  <span class="dot" anvil:dom-node="dot3"></span>
+                  <div><b anvil:dom-node="ch_title"></b><p anvil:dom-node="ch_text"></p>
+                    <a class="ui-btn sm" anvil:dom-node="ch_link"></a></div>
+                </div>
+              </div>
+              <a class="ui-card tight md-nextlink" anvil:dom-node="next_link"><span class="small muted" anvil:dom-node="next_k"></span><b anvil:dom-node="next_t"></b></a>
+            </div>
+          </aside>
+        </div>
+      </div>
+      <div class="ui-wrap ui-narrow" anvil:name="missing_part">
+        <div class="ui-empty"><i class="ic ic-alert"></i><h2>That module doesn&rsquo;t exist</h2><p>It may have been renamed.</p><a class="ui-btn primary" href="#tracks">All programs</a></div>
+      </div>
+    </div>
+  </anvil-block>
+</anvil-form>

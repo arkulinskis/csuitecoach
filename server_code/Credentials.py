@@ -13,7 +13,7 @@ from . import Curriculum as K
 
 def cred_public(r):
     track = r["track"]
-    t = K.FELLOW if track == "fellow" else K.TRACK_BY_ID.get(track, {})
+    t: dict = K.FELLOW if track == "fellow" else K.TRACK_BY_ID.get(track, {})
     return {"code": r["code"], "holder": r["holder"], "track": track, "title": K.track_title(track),
             "credential": K.credential_name(track), "track_code": t.get("code", ""), "issued": C.iso(r["issued"]),
             "status": "revoked" if r["revoked"] else "valid", "demo": bool(r["is_demo"]),

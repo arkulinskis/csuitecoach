@@ -1,0 +1,65 @@
+<anvil-form layout="C_Suite_Coach.Layouts.Shell">
+  <anvil-block slot="content">
+    <div class="tr">
+      <anvil-component type="C_Suite_Coach.Components.Hero" name="hero"></anvil-component>
+      <div class="ui-wrap" anvil:name="catalog_part">
+        <anvil-component type="RepeatingPanel" name="cards_panel" prop:item_template="C_Suite_Coach.Items.TrackCard" prop:role='["tr-grid"]'></anvil-component>
+        <div class="tr-fellow">
+          <div><anvil-component type="C_Suite_Coach.Components.Seal" name="seal" prop:size="84" prop:decorative="true"></anvil-component></div>
+          <div>
+            <h2>Fellow of the C-Suite Coach Institute</h2>
+            <p>Hold Executive Foundations and any two role certificates and you are admitted as a Fellow (FCSCI), with its own certificate.</p>
+          </div>
+          <a class="ui-btn gold" href="#credentials" anvil:name="fellow_member">Your progress</a>
+          <a class="ui-btn gold" href="#auth/signup" anvil:name="fellow_guest">Enrol, free</a>
+        </div>
+      </div>
+      <div class="ui-wrap" anvil:name="track_part">
+        <div class="tr-layout">
+          <div class="tr-mods">
+            <anvil-component type="RepeatingPanel" name="modules_panel" prop:item_template="C_Suite_Coach.Items.ModuleRow" prop:role='["tr-mods-list"]'></anvil-component>
+            <div class="tr-mod capstone">
+              <div class="num" aria-hidden="true"><i class="ic ic-award"></i></div>
+              <div class="tx">
+                <h3>Final examination</h3>
+                <p anvil:dom-node="cap_text"></p>
+                <div class="meta"><span class="ui-badge">80% recall</span><span class="ui-badge">70% capstone</span><span class="ui-badge">Honour code</span></div>
+              </div>
+              <span class="ui-badge gold" anvil:name="cap_certified">Certified</span>
+              <a class="ui-btn gold sm" anvil:dom-node="cap_begin_a">Begin</a>
+              <span class="ui-badge" anvil:name="cap_locked"><i class="ic ic-lock"></i><span anvil:dom-node="cap_locked_t"></span></span>
+            </div>
+          </div>
+          <aside class="tr-side">
+            <div class="ui-card" anvil:name="progress_card">
+              <div class="ui-row tr-prog">
+                <anvil-component type="C_Suite_Coach.Components.Ring" name="ring" prop:size="76"></anvil-component>
+                <div>
+                  <h2 class="cs-ph">Your progress</h2>
+                  <b anvil:dom-node="prog_done"></b>
+                  <div class="small muted" anvil:dom-node="prog_note"></div>
+                </div>
+              </div>
+            </div>
+            <div class="ui-card">
+              <h2 class="cs-ph">What you&rsquo;ll be able to do</h2>
+              <anvil-component type="RepeatingPanel" name="outcomes_panel" prop:item_template="C_Suite_Coach.Items.Bullet" prop:role='["cs-list"]'></anvil-component>
+            </div>
+            <div class="ui-card">
+              <h2 class="cs-ph">Each module</h2>
+              <ul class="cs-ul">
+                <li>A research briefing, with good advice and traps</li>
+                <li>Real case files from the Casebook</li>
+                <li>Recall drills and advice calls on spaced repetition</li>
+                <li>A boardroom challenge scored on a rubric (70% to pass)</li>
+              </ul>
+            </div>
+          </aside>
+        </div>
+      </div>
+      <div class="ui-wrap ui-narrow" anvil:name="missing_part">
+        <div class="ui-empty"><i class="ic ic-alert"></i><h2>That program doesn&rsquo;t exist</h2><p>It may have been renamed.</p><a class="ui-btn primary" href="#tracks">All programs</a></div>
+      </div>
+    </div>
+  </anvil-block>
+</anvil-form>

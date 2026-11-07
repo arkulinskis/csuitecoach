@@ -1,0 +1,23 @@
+---
+custom_component: true
+properties:
+  - name: pct
+    type: number
+    default_value: 0
+    description: Progress, 0 to 100
+    default_binding_prop: true
+  - name: size
+    type: number
+    default_value: 64
+    description: Width and height in pixels
+  - name: label
+    type: string
+    default_value: ""
+    description: Text in the middle (empty = the percentage)
+toolbox_item:
+  title: Progress ring
+  group: C-Suite Coach
+help_text: |
+  A gold progress ring (CS.ring in theme/assets/cs-cert.js).
+---
+<span class="cs-ring-host" anvil:dom-node="box"></span>

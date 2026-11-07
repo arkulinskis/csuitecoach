@@ -1,0 +1,87 @@
+<anvil-form layout="C_Suite_Coach.Layouts.Shell">
+  <anvil-block slot="content">
+    <div class="hm">
+      <section class="hm-top">
+        <div class="ph" aria-hidden="true"></div>
+        <div class="in">
+          <div>
+            <h1 anvil:dom-node="greeting"></h1>
+            <p class="sub" anvil:dom-node="sub"></p>
+          </div>
+          <div class="hm-rank">
+            <div class="r"><b anvil:dom-node="rank"></b><span anvil:dom-node="xp"></span></div>
+            <anvil-component type="C_Suite_Coach.Components.Bar" name="rank_bar" prop:label="Progress to the next rank"></anvil-component>
+            <div class="r"><span anvil:dom-node="next_rank"></span><span><i class="ic ic-flame"></i> <span anvil:dom-node="streak"></span></span></div>
+          </div>
+        </div>
+      </section>
+      <div class="ui-wrap hm-body">
+        <div class="hm-grid">
+          <div class="hm-col">
+            <div class="ui-card hm-review">
+              <div class="big" anvil:dom-node="due"></div>
+              <div>
+                <h2 class="cs-ph" anvil:dom-node="due_title"></h2>
+                <p class="muted small" anvil:dom-node="due_text"></p>
+                <anvil-component type="RepeatingPanel" name="week_panel" prop:item_template="C_Suite_Coach.Items.WeekDay" prop:role='["hm-week"]'></anvil-component>
+              </div>
+              <a class="ui-btn primary lg" href="#study/review" anvil:name="review_link"><i class="ic ic-cards"></i>Start review</a>
+              <a class="ui-btn lg" href="#tracks" anvil:name="programs_link"><i class="ic ic-columns"></i>Programs</a>
+            </div>
+            <anvil-component type="RepeatingPanel" name="exams_panel" prop:item_template="C_Suite_Coach.Items.ExamReady" prop:role='["hm-exams"]'></anvil-component>
+            <div class="ui-card hm-next" anvil:name="next_card">
+              <div class="img" anvil:dom-node="next_img" aria-hidden="true"></div>
+              <div class="txt">
+                <h2 class="cs-ph hm-next-title" anvil:dom-node="next_title"></h2>
+                <p class="hm-where" anvil:dom-node="next_where"></p>
+                <p class="muted" anvil:dom-node="next_summary"></p>
+                <div class="hm-steps">
+                  <span class="ui-badge" anvil:dom-node="st_read"></span>
+                  <span class="ui-badge" anvil:dom-node="st_drill"></span>
+                  <span class="ui-badge" anvil:dom-node="st_ch"></span>
+                </div>
+                <div class="ui-row"><a class="ui-btn primary" anvil:dom-node="next_go"></a></div>
+              </div>
+            </div>
+            <div class="ui-card" anvil:name="all_done">
+              <h2 class="cs-ph">Every started program is complete</h2>
+              <p class="muted">Choose your next program and keep building toward the Fellowship.</p>
+              <a class="ui-btn primary" href="#tracks">Browse programs</a>
+            </div>
+            <section class="cs-panel">
+              <header><h2>Your programs</h2><a class="small" href="#tracks">All programs</a></header>
+              <div class="body">
+                <anvil-component type="RepeatingPanel" name="tracks_panel" prop:item_template="C_Suite_Coach.Items.HomeTrack" prop:role='["hm-tracks"]'></anvil-component>
+              </div>
+            </section>
+          </div>
+          <div class="hm-col">
+            <section class="cs-panel">
+              <header><h2>Your credentials</h2><a class="small" href="#credentials">View all</a></header>
+              <div class="body">
+                <anvil-component type="RepeatingPanel" name="creds_panel" prop:item_template="C_Suite_Coach.Items.CredRow" prop:role='["hm-creds"]'></anvil-component>
+                <p class="muted small hm-empty" anvil:name="no_creds">Complete a program and pass its examination to earn your first credential. Executive Foundations is the place to start.</p>
+              </div>
+            </section>
+            <section class="cs-panel">
+              <header><h2>Case of the day</h2><anvil-component type="Label" name="case_tone"></anvil-component></header>
+              <div class="body">
+                <div class="small muted" anvil:dom-node="case_where"></div>
+                <h3 class="hm-case-title" anvil:dom-node="case_title"></h3>
+                <p class="muted small" anvil:dom-node="case_summary"></p>
+                <a class="ui-btn sm" anvil:dom-node="case_link"><i class="ic ic-book"></i>Read the case</a>
+              </div>
+            </section>
+            <section class="cs-panel">
+              <header><h2>Honour Roll</h2><span class="small muted">Recently certified</span></header>
+              <div class="body">
+                <anvil-component type="RepeatingPanel" name="honour_panel" prop:item_template="C_Suite_Coach.Items.HonourCard" prop:role='["hm-honour"]'></anvil-component>
+                <p class="muted small hm-empty" anvil:name="no_honour">No one yet. Opt in from your profile when you&rsquo;re certified.</p>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
+  </anvil-block>
+</anvil-form>

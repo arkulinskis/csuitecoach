@@ -1,0 +1,37 @@
+<anvil-form layout="C_Suite_Coach.Layouts.Shell">
+  <anvil-block slot="content">
+    <div class="ui-wrap st">
+      <div class="st-head">
+        <div><h1 anvil:dom-node="title"></h1><p class="muted" anvil:dom-node="subtitle"></p></div>
+        <a class="ui-btn ghost sm" anvil:dom-node="back"></a>
+      </div>
+      <div class="ui-empty ui-narrow" anvil:name="empty">
+        <i class="ic ic-check"></i>
+        <h2>Nothing due right now</h2>
+        <p>Every drill you&rsquo;ve learned is scheduled for later. Start a new module to add more.</p>
+        <a class="ui-btn primary" href="#tracks">Browse programs</a>
+      </div>
+      <div anvil:name="session">
+        <anvil-component type="C_Suite_Coach.Components.Drill" name="drill"></anvil-component>
+        <p class="st-legend" anvil:dom-node="legend"></p>
+      </div>
+      <div class="ui-card st-done" anvil:name="done_card">
+        <h2>Session complete</h2>
+        <div class="score" anvil:dom-node="score"></div>
+        <div class="muted">recalled on the first try</div>
+        <div class="split">
+          <div><b class="good" anvil:dom-node="got"></b><span>Got it</span></div>
+          <div><b class="bad" anvil:dom-node="missed"></b><span>Still learning</span></div>
+          <div><b anvil:dom-node="xp"></b><span>XP</span></div>
+        </div>
+        <p class="ui-note" anvil:dom-node="completed" hidden></p>
+        <p class="muted small" anvil:dom-node="advice"></p>
+        <div class="ui-row st-actions">
+          <a class="ui-btn primary" href="#home" anvil:name="dash_link">Back to the dashboard</a>
+          <anvil-component type="Button" name="again_button" prop:text="Drill again" prop:role='["btn", "ic-refresh"]'></anvil-component>
+          <a class="ui-btn primary" anvil:dom-node="module_a"><i class="ic ic-target"></i>Back to the module</a>
+        </div>
+      </div>
+    </div>
+  </anvil-block>
+</anvil-form>

@@ -1,0 +1,36 @@
+<anvil-form layout="C_Suite_Coach.Layouts.Shell">
+  <anvil-block slot="content">
+    <div class="vf">
+      <anvil-component type="C_Suite_Coach.Components.Hero" name="hero"></anvil-component>
+      <div class="ui-wrap">
+        <div class="vf-box">
+          <div class="ui-card">
+            <div class="vf-form">
+              <anvil-component type="TextBox" name="code_box" prop:placeholder="CSC-XXX-2026-XXXXXX" prop:role='["vf-code"]'></anvil-component>
+              <anvil-component type="Button" name="verify_button" prop:text="Verify" prop:role='["btn", "btn-primary", "ic-shield"]'></anvil-component>
+            </div>
+            <div class="vf-res" anvil:dom-node="res_box" hidden>
+              <i class="ic" anvil:dom-node="res_ic"></i>
+              <div>
+                <h2 anvil:dom-node="res_head"></h2>
+                <p class="muted" anvil:dom-node="res_text"></p>
+                <dl anvil:name="res_dl">
+                  <dt>Holder</dt><dd anvil:dom-node="holder"></dd>
+                  <dt>Credential</dt><dd anvil:dom-node="credential"></dd>
+                  <dt>Issued</dt><dd anvil:dom-node="issued"></dd>
+                  <dt>ID</dt><dd><span anvil:dom-node="code"></span> <span class="ui-badge" anvil:dom-node="sample" hidden>Sample record</span></dd>
+                </dl>
+                <a class="ui-btn sm vf-view" anvil:dom-node="view"><i class="ic ic-award"></i>View the certificate</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <section class="vf-roll-sec">
+          <h2>Honour Roll: recently certified</h2>
+          <anvil-component type="RepeatingPanel" name="roll_panel" prop:item_template="C_Suite_Coach.Items.HonourCard" prop:role='["vf-roll"]'></anvil-component>
+          <p class="muted" anvil:name="no_roll">The first graduates will appear here.</p>
+        </section>
+      </div>
+    </div>
+  </anvil-block>
+</anvil-form>

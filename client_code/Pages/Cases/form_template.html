@@ -1,0 +1,36 @@
+<anvil-form layout="C_Suite_Coach.Layouts.Shell">
+  <anvil-block slot="content">
+    <div class="cb">
+      <anvil-component type="C_Suite_Coach.Components.Hero" name="hero"></anvil-component>
+      <div class="ui-wrap" anvil:name="list_part">
+        <div class="cb-filter ui-seg" role="group" aria-label="Filter the cases">
+          <anvil-component type="Button" name="f_all" prop:text="All cases" prop:role='["seg"]'></anvil-component>
+          <anvil-component type="Button" name="f_exemplary" prop:text="Exemplary" prop:role='["seg"]'></anvil-component>
+          <anvil-component type="Button" name="f_cautionary" prop:text="Cautionary" prop:role='["seg"]'></anvil-component>
+          <anvil-component type="Button" name="f_mixed" prop:text="Mixed" prop:role='["seg"]'></anvil-component>
+        </div>
+        <anvil-component type="RepeatingPanel" name="cases_panel" prop:item_template="C_Suite_Coach.Items.CaseCard" prop:role='["cb-grid"]'></anvil-component>
+      </div>
+      <div class="ui-wrap" anvil:name="one_part">
+        <article class="cb-file">
+          <anvil-component type="RepeatingPanel" name="story_panel" prop:item_template="C_Suite_Coach.Items.Para" prop:role='["cb-story"]'></anvil-component>
+          <div class="cb-lesson"><h2>The lesson</h2><p anvil:dom-node="lesson"></p></div>
+          <section anvil:name="mods_sec">
+            <h2 class="cb-h">Studied in</h2>
+            <anvil-component type="RepeatingPanel" name="mods_panel" prop:item_template="C_Suite_Coach.Items.ModuleLink" prop:role='["ui-list-panel"]'></anvil-component>
+          </section>
+          <h2 class="cb-h">Sources</h2>
+          <anvil-component type="RepeatingPanel" name="sources_panel" prop:item_template="C_Suite_Coach.Items.SourceLink" prop:role='["cs-sources"]'></anvil-component>
+          <p class="small muted cb-note">A summary of public reporting, written for teaching. Details such as figures and quotations vary between sources.</p>
+          <div class="cb-nav">
+            <a class="ui-btn" anvil:dom-node="prev"><i class="ic ic-back"></i>Previous case</a>
+            <a class="ui-btn" anvil:dom-node="next">Next case<i class="ic ic-arrow"></i></a>
+          </div>
+        </article>
+      </div>
+      <div class="ui-wrap ui-narrow" anvil:name="missing_part">
+        <div class="ui-empty"><i class="ic ic-alert"></i><h2>That case isn&rsquo;t in the Casebook</h2><a class="ui-btn primary" href="#cases">The Casebook</a></div>
+      </div>
+    </div>
+  </anvil-block>
+</anvil-form>
