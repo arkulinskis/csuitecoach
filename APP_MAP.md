@@ -7,7 +7,7 @@ around them with an offset instead of whole files.
 
 **What it is:** Executive training for the C-suite: real business cases, boardroom challenges and spaced-repetition drills. Earn C-Suite Coach Institute certificates.
 **Live:** https://csuite-coach.anvil.app · **Repo:** github.com/arkulinskis/csuitecoach · **Layout:** native Anvil Forms · **Deploy:** master
-**Guide** (workflow, design rules, product knowledge): `csuitecoach/.claude/skills/csuitecoach/SKILL.md`
+**Guide** (workflow, design rules, product knowledge): `.claude/skills/csuitecoach/SKILL.md`
 
 ## How to change it
 
