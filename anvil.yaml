@@ -424,10 +424,9 @@ db_schema:
     server: full
     title: Users
 metadata:
-  description: 'Executive training for the C-suite: real business cases, boardroom challenges and spaced-repetition drills.
-    Earn C-Suite Coach Institute certificates.'
-  logo_img: asset:icon-512.png
-  title: 'C-Suite Coach Institute: executive training and certificates'
+  description: "Executive training for the C-suite: real business cases, boardroom challenges and spaced-repetition drills. Earn C-Suite Coach Institute certificates."
+  logo_img: "asset:icon-512.png"
+  title: "C-Suite Coach Institute: executive training and certificates"
 name: C-Suite Coach
 native_deps:
   head_html: |
@@ -451,7 +450,7 @@ native_deps:
     <meta name="twitter:description" content="Executive training for the C-suite: real business cases, boardroom challenges and spaced-repetition drills. Earn C-Suite Coach Institute certificates.">
     <meta name="twitter:image" content="https://csuite-coach.anvil.app/_/theme/og-image.png">
     <link rel="alternate" type="text/plain" title="C-Suite Coach for AI assistants" href="https://csuite-coach.anvil.app/llms.txt">
-    <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "@id": "https://csuite-coach.anvil.app/#app", "name": "C-Suite Coach", "url": "https://csuite-coach.anvil.app/", "description": "Executive training for the C-suite: real business cases, boardroom challenges and spaced-repetition drills. Earn C-Suite Coach Institute certificates.", "image": "https://csuite-coach.anvil.app/_/theme/og-image.png", "inLanguage": "en", "publisher": {"@id": "https://arkvital.com/#org"}, "keywords": "executive education online, C-suite training, CEO training program, CFO course, leadership certification, business case studies, executive coaching app, aspiring executive, board decision making", "applicationCategory": "EducationalApplication", "operatingSystem": "Any (web browser)", "browserRequirements": "Requires JavaScript and a modern web browser", "featureList": ["Seven programs: Executive Foundations plus six role programs", "Module briefings with Do and Avoid lists and sources", "A casebook of 24 real, sourced business cases", "Spaced-repetition drills", "Written boardroom challenges and a final examination", "Certificates with public verification codes"], "audience": {"@type": "Audience", "audienceType": "Current and aspiring CEOs, CFOs, COOs, CHROs, CTOs, CIOs, CISOs and CMOs"}}, {"@type": "WebSite", "@id": "https://csuite-coach.anvil.app/#site", "url": "https://csuite-coach.anvil.app/", "name": "C-Suite Coach", "publisher": {"@id": "https://arkvital.com/#org"}}, {"@type": "Organization", "@id": "https://arkvital.com/#org", "name": "Arkvital", "url": "https://arkvital.com", "email": "arkvital@outlook.com", "address": {"@type": "PostalAddress", "addressLocality": "Montreal", "addressRegion": "QC", "addressCountry": "CA"}}]}</script>
+    <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Service", "@id": "https://csuite-coach.anvil.app/#app", "name": "C-Suite Coach", "url": "https://csuite-coach.anvil.app/", "description": "Executive training for the C-suite: real business cases, boardroom challenges and spaced-repetition drills. Earn C-Suite Coach Institute certificates.", "image": "https://csuite-coach.anvil.app/_/theme/og-image.png", "serviceType": "Executive training for current and aspiring C-suite leaders", "provider": {"@id": "https://arkvital.com/#org"}, "areaServed": "Worldwide", "availableChannel": {"@type": "ServiceChannel", "serviceUrl": "https://csuite-coach.anvil.app/", "name": "Web browser"}, "availableLanguage": "en", "audience": {"@type": "Audience", "audienceType": "Current and aspiring CEOs, CFOs, COOs, CHROs, CTOs, CIOs, CISOs and CMOs"}}, {"@type": "WebSite", "@id": "https://csuite-coach.anvil.app/#site", "url": "https://csuite-coach.anvil.app/", "name": "C-Suite Coach", "publisher": {"@id": "https://arkvital.com/#org"}}, {"@type": "Organization", "@id": "https://arkvital.com/#org", "name": "Arkvital", "url": "https://arkvital.com", "email": "arkvital@outlook.com", "address": {"@type": "PostalAddress", "addressLocality": "Montreal", "addressRegion": "QC", "addressCountry": "CA"}}]}</script>
     <!-- seo:end -->
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="theme-color" content="#14213d">
