@@ -147,7 +147,7 @@ class Drill(DrillTemplate):
         tag = str(getattr(event.target, "tagName", "") or "")
         if tag in ("INPUT", "TEXTAREA", "SELECT"):
             return
-        k = event.key
+        k = getattr(event, "key", None)
         if k in (" ", "Enter"):
             if not self._revealed:
                 event.preventDefault()
