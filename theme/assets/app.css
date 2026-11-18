@@ -613,7 +613,7 @@ html.ui-modal-open { overflow: hidden; }
 .ui .lp-step h3 { margin: 10px 0 6px; }
 .lp-step p { color: var(--c-muted); font-size: .93rem; margin: 0; }
 .lp-step > .ic { position: absolute; right: 20px; top: 26px; width: 26px; height: 26px; color: var(--c-faint); }
-.anvil-role-lp-programs > div { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 18px; }
+.anvil-role-lp-programs > div { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 18px; }
 .anvil-role-lp-cases > div { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
 .lp-more { text-align: center; margin-top: 22px; }
 .lp-quote { max-width: 860px; margin: 0 auto; text-align: center; }
@@ -1108,3 +1108,52 @@ anvil-dropzone { display: contents; }
 .anvil-notification, [data-notify="container"] { transition-property: opacity, transform !important; }
 .au-card a { display: inline-block; padding: 3px 0; }  /* 24px+ touch height */
 .anvil-notification .anvil-close, [data-notify="dismiss"] { min-width: 24px; min-height: 24px; }
+
+/* ---- Team plan (#team, #join/<token>, landing "For leadership teams", home "Assigned by") ---- */
+.tm-body { padding-top: 28px; padding-bottom: 56px; display: grid; gap: 22px; }
+.tm-start { display: grid; grid-template-columns: 1.2fr .8fr; gap: 22px; align-items: start; }
+.tm-steps { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; }
+.tm-steps li { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 10px; align-items: start; }
+.tm-steps .ic { width: 20px; height: 20px; color: var(--c-accent-ink); margin-top: 2px; }
+.tm-stats { margin: 0; }
+.tm-label { font-weight: 600; font-size: .9rem; margin: 0 0 8px; }
+.anvil-role-tm-picks > div { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 8px; }
+.tm-pick { border: 1px solid var(--c-line); border-radius: var(--radius); padding: 8px 12px; background: var(--c-bg);
+  transition: border-color var(--dur-fast) var(--ease-out); }
+.tm-pick:has(input:checked) { border-color: var(--c-accent); background: var(--c-accent-soft); }
+.tm-pick .anvil-role-cs-check label { font-size: .9rem; }
+.anvil-role-tm-members > div { display: grid; gap: 12px; }
+.tm-row { border: 1px solid var(--c-line); border-radius: var(--radius); padding: 16px; background: var(--c-surface); display: grid; gap: 10px; }
+.tm-row-head { display: grid; grid-template-columns: 40px minmax(0, 1fr) auto; gap: 12px; align-items: center; }
+.anvil-role-tm-avatar { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; background: #14213d; color: #c9a66b;
+  font: 600 .95rem/1 var(--font-body); }
+.tm-who { display: grid; min-width: 0; }
+.tm-name { font: 600 1.1rem/1.25 var(--font-display); overflow-wrap: anywhere; }
+.tm-email { color: var(--c-muted); font-size: .8125rem; overflow-wrap: anywhere; }
+.tm-facts { margin: 0; color: var(--c-muted); font-size: .875rem; }
+.anvil-role-tm-tracks > div { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px 18px; }
+.tm-track { display: grid; gap: 6px; min-width: 0; }
+.tm-track-top { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+.tm-track-title { font-weight: 600; font-size: .9rem; }
+.tm-creds { margin: 0; display: flex; gap: 6px; align-items: flex-start; font-size: .875rem; color: var(--c-accent-ink); }
+.tm-creds .ic { width: 16px; height: 16px; flex: none; margin-top: 2px; }
+.tm-actions { gap: 8px; }
+.anvil-role-tm-links > div { display: flex; flex-wrap: wrap; gap: 8px; }
+.tm-join-track { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--c-line); }
+.tm-join-track .ic { width: 20px; height: 20px; color: var(--c-accent-ink); margin-top: 3px; }
+.tm-join-track b { display: block; font: 600 1.1rem/1.25 var(--font-display); }
+.tm-privacy { background: var(--c-bg); border: 1px solid var(--c-line); border-radius: var(--radius); padding: 12px 14px; }
+.tm-privacy h3 { margin: 0 0 4px; font-size: 1rem; display: flex; gap: 8px; align-items: center; }
+.tm-privacy h3 .ic { width: 16px; height: 16px; }
+.tm-privacy p { margin: 0; }
+.tm-dialog { min-width: min(520px, 80vw); }
+.lp-teams { display: grid; grid-template-columns: 1.1fr .9fr; gap: 40px; align-items: center; }
+.lp-teams .ui-btn { margin-top: 8px; }
+.hm-team { border-top: 3px solid var(--c-accent); }
+.hm-team .body > p { margin: 0 0 12px; }
+@media (max-width: 860px) { .tm-start, .lp-teams { grid-template-columns: minmax(0, 1fr); gap: 22px; } }
+@media (max-width: 480px) { .tm-row-head { grid-template-columns: 40px minmax(0, 1fr); } .tm-row-head > :last-child { grid-column: 2; justify-self: start; } }
+.tm-stack { display: grid; gap: 22px; }
+.tm-stats .anvil-role-stat-num, .tm-stats .anvil-role-stat-num span { font: 700 2.1rem/1.1 var(--font-display); color: var(--c-ink); font-variant-numeric: lining-nums; }
+.tm-pick .anvil-role-cs-check input { margin-right: 4px; }
+.tm-start .fine-print, .tm-start .ui-stack > p:last-child { margin-top: 14px; }

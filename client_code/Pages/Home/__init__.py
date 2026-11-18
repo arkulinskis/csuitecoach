@@ -45,6 +45,12 @@ class Home(HomeTemplate):
         self.week_panel.items = d["week"]
         self.review_link.visible, self.programs_link.visible = bool(due), not due
         tracks = {t["id"]: t for t in d["tracks"]}
+        team = d.get("team")
+        self.team_panel.visible = bool(team and team["tracks"])
+        if team:
+            cs.set_text(n["team_title"], "Assigned by %s" % team["team"])
+            cs.set_text(n["team_line"], "%s, your team manager, follows your progress in these programs." % team["manager"])
+            self.team_tracks_panel.items = [tracks[i] for i in team["tracks"] if i in tracks]
         self.exams_panel.items = [tracks[i] for i in d["ready_exam"] if i in tracks]
         self.exams_panel.visible = bool(d["ready_exam"])
         # continue / up next

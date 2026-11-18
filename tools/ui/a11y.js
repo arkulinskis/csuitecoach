@@ -10,9 +10,9 @@
 (async function () {
   /*AXE*/
   const PUBLIC = ['#landing', '#auth', '#auth/signup', '#tracks', '#tracks/cfo', '#module/cfo-risk', '#cases', '#cases/svb',
-                  '#verify/CSC-CFO-2026-T4WX9N', '#certificate/CSC-FEL-2026-D9RV3C'];
+                  '#verify/CSC-CFO-2026-T4WX9N', '#certificate/CSC-FEL-2026-D9RV3C', '#team', '#join/nope-not-a-token'];
   const MEMBER = ['#home', '#tracks/core', '#module/core-board', '#study/core-crisis', '#challenge/ch-cfo-risk', '#exam/core',
-                  '#credentials', '#profile'];
+                  '#credentials', '#profile', '#team'];
   const log = [], bad = [];
   const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
   async function until(fn, what, ms) {

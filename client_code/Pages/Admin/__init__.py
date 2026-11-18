@@ -38,6 +38,9 @@ class Admin(AdminTemplate):
         self.s_feedback.text, self.s_learners.text = str(d["feedback_new"]), str(d["learners"])
         self.s_modules.text, self.s_attempts.text = str(d["modules_done"]), str(d["attempts"])
         self.s_exams.text, self.s_creds.text = str(d["exams"]), str(d["credentials"])
+        tm = d.get("teams") or {}
+        self.s_teams.text = str(tm.get("teams", 0))
+        self.s_teams_label.text = "teams, %d members in them" % tm.get("team_members", 0)
         self.demo_line.text = "Demo data is %s (%d demo people). Manage it in the Demo data tab." % (
             d["demo"]["state"], d["demo"]["counts"].get("users", 0))
 

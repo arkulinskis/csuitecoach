@@ -28,6 +28,13 @@
               <a class="ui-btn primary lg" href="#study/review" anvil:name="review_link"><i class="ic ic-cards"></i>Start review</a>
               <a class="ui-btn lg" href="#tracks" anvil:name="programs_link"><i class="ic ic-columns"></i>Programs</a>
             </div>
+            <section class="cs-panel hm-team" anvil:name="team_panel">
+              <header><h2 anvil:dom-node="team_title"></h2><a class="small" href="#team">Your team</a></header>
+              <div class="body">
+                <p class="muted small" anvil:dom-node="team_line"></p>
+                <anvil-component type="RepeatingPanel" name="team_tracks_panel" prop:item_template="C_Suite_Coach.Items.HomeTrack" prop:role='["hm-tracks"]'></anvil-component>
+              </div>
+            </section>
             <anvil-component type="RepeatingPanel" name="exams_panel" prop:item_template="C_Suite_Coach.Items.ExamReady" prop:role='["hm-exams"]'></anvil-component>
             <div class="ui-card hm-next" anvil:name="next_card">
               <div class="img" anvil:dom-node="next_img" aria-hidden="true"></div>

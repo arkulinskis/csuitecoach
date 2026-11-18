@@ -28,12 +28,14 @@ PAGES = {
     "verify": (None, "Verify a credential"),
     "cases": (None, "The Casebook"),
     "profile": ("user", "Your profile"),
+    "team": (None, "Team plan"),
+    "join": (None, "Join your team"),
     "admin": ("admin", "Admin"),
 }
 NAV = [("home", "Home", "home"), ("tracks", "Programs", "columns"), ("study", "Review", "cards"),
        ("credentials", "Credentials", "award")]
 NAV_MORE = [("cases", "Casebook", "book")]
-GUEST_NAV = [("tracks", "Programs", "columns"), ("cases", "Casebook", "book"), ("verify", "Verify", "shield")]
+GUEST_NAV = [("tracks", "Programs", "columns"), ("cases", "Casebook", "book"), ("team", "For teams", "users"), ("verify", "Verify", "shield")]
 APP_NAME = "C-Suite Coach"
 _r: dict = {"after": "", "listening": False}
 
@@ -79,6 +81,12 @@ def _form(name):
     if name == "profile":
         from .Pages.Profile import Profile
         return Profile
+    if name == "team":
+        from .Pages.Team import Team
+        return Team
+    if name == "join":
+        from .Pages.Join import Join
+        return Join
     from .Pages.Admin import Admin
     return Admin
 

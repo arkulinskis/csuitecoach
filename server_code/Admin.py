@@ -5,7 +5,8 @@ from anvil.tables import app_tables
 import anvil.tables as tables
 
 from . import common as C
-from . import DemoData, Feedback
+from . import DemoData
+from . import Teams, Feedback
 
 
 @anvil.server.callable(require_user=True)
@@ -19,6 +20,7 @@ def admin_overview():
             "attempts": len([r for r in app_tables.attempts.search() if not r["is_demo"]]),
             "exams": len([r for r in app_tables.exams.search() if not r["is_demo"] and r["finished"]]),
             "modules_done": len([r for r in app_tables.module_progress.search() if not r["is_demo"] and r["completed_at"]]),
+            "teams": Teams.counts(),
             "demo": {"state": DemoData.state(), "counts": DemoData.counts()}}
 
 

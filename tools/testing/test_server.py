@@ -146,17 +146,17 @@ assert len(T.credentials.search()) == n_creds, "reloading replaces the demo inst
 assert call("get_credential", M["DemoData"].FELLOW_CODE)["title"] == "Fellowship of the Institute"
 
 # ---------------------------------------------------------------------------------- curriculum (public)
-assert len(K.TRACKS) == 7 and len(K.MODULES) == 24
+assert len(K.TRACKS) == 9 and len(K.MODULES) == 34
 for mid, m in K.MODULES.items():
-    assert len(m["cards"]) >= 5 and len(m["advice"]) == 3 and len(m["challenge"]["rubric"]) >= 4, mid
+    assert len(m["cards"]) >= 5 and len(m["advice"]) >= 3 and len(m["challenge"]["rubric"]) >= 4, mid
     assert all(c in M["content_cases"].CASE_BY_ID for c in m["cases"]), mid
     assert m["photo"] and m["challenge"]["photo"], mid
 for t in K.TRACKS:
     assert len(t["capstone"]["rubric"]) >= 4 and t["photo"]
-assert len(set(K.CHALLENGES)) == 24 + 7
+assert len(set(K.CHALLENGES)) == 34 + 9
 as_user(None)
 cat = call("get_catalog")
-assert len(cat["tracks"]) == 7 and "status" not in cat["tracks"][0] and cat["totals"]["items"] == len(K.ITEMS)
+assert len(cat["tracks"]) == 9 and "status" not in cat["tracks"][0] and cat["totals"]["items"] == len(K.ITEMS)
 tr = ok(call("get_track", "cfo"))["track"]
 assert tr["code"] == "CFO" and len(tr["modules"]) == 3 and "status" not in tr
 bad(call("get_track", "nope"))
@@ -179,7 +179,7 @@ assert nf["found"] is False
 as_user(ana)
 today = dt.date.today().isoformat()
 d = call("get_dashboard", today)
-assert d["due"] == 0 and d["next"]["id"] == "core-decide" and d["me"]["rank"]["rank"] == "Analyst" and len(d["tracks"]) == 7
+assert d["due"] == 0 and d["next"]["id"] == "core-decide" and d["me"]["rank"]["rank"] == "Analyst" and len(d["tracks"]) == 9
 assert len(d["honour"]) >= 1 and d["case"]["id"]
 st = ok(call("get_study", "core-decide", today))
 assert len(st["items"]) == len(K.module_items("core-decide")) and all(i["box"] is None for i in st["items"])
@@ -286,6 +286,94 @@ ok(call("admin_set_revoked", res["code"], False))
 ov = call("admin_overview")
 assert ov["credentials"] >= 4 and ov["attempts"] >= 7 and ov["exams"] == 2 and ov["modules_done"] == 6
 
+# ---------------------------------------------------------------------------------- team plan
+import anvil.email  # noqa: E402
+boss = person("boss@corp.example", "Bea Boss")
+lea = person("lea@corp.example", "Lea Lead")
+eve = person("eve@example.com", "Eve")
+as_user(None)
+assert denied("get_team") and denied("create_team", "X") and denied("accept_invite", "x" * 20)
+as_user(boss)
+g = call("get_team")
+assert g["managed"] is None and g["membership"] is None and len(g["catalog"]) == len(M["Curriculum"].TRACKS)
+bad(call("create_team", " "))
+bad(call("invite_people", "Lea, lea@corp.example", ["core"]), "no team yet")
+t = ok(call("create_team", "Northwind leaders", ["core", "nope"]))["team"]
+assert t["tracks"] == ["core"] and t["members"] == []
+bad(call("create_team", "Second"), "one team per manager")
+bad(call("invite_people", "Lea, lea@corp.example", []), "programs needed")
+bad(call("invite_people", "nobody here", ["core"]), "no valid email")
+n0 = len(anvil.email.OUTBOX)
+r = ok(call("invite_people", "Lea Lead, LEA@corp.example\nRay <ray@corp.example>\nnot-an-email\nsam@corp.example", ["core", "cfo"], True))
+assert [m["email"] for m in r["made"]] == ["lea@corp.example", "ray@corp.example", "sam@corp.example"], r["made"]
+assert r["made"][1]["name"] == "Ray" and r["made"][2]["name"] == "Sam" and r["bad"] == ["not-an-email"]
+assert r["sent"] == 3 and len(anvil.email.OUTBOX) == n0 + 3 and "#join/" in anvil.email.OUTBOX[-1]["text"]
+assert "boss@corp.example" not in json.dumps(anvil.email.OUTBOX[-1]), "the manager's email isn't in the invite"
+r2 = ok(call("invite_people", "lea@corp.example", ["core"], False))
+assert r2["made"] == [] and r2["skipped"] == ["lea@corp.example"]
+tv = r2["team"]
+assert tv["stats"]["invited"] == 3 and tv["stats"]["active"] == 0
+lea_row = next(m for m in tv["members"] if m["email"] == "lea@corp.example")
+token = lea_row["link"].split("#join/")[1]
+# the invite page is public and leaks no emails
+as_user(None)
+inv = call("get_invite", token)
+assert inv["found"] and inv["team"] == "Northwind leaders" and inv["manager"] == "Bea Boss" and not inv["signed_in"]
+assert [x["id"] for x in inv["tracks"]] == ["core", "cfo"] and "@" not in json.dumps(inv)
+assert call("get_invite", "nope")["found"] is False and call("get_invite", None)["found"] is False
+# someone else can't manage the team
+as_user(eve)
+assert call("get_team")["managed"] is None
+bad(call("remove_member", lea_row["id"]))
+bad(call("set_member_tracks", lea_row["id"], ["core"]))
+bad(call("resend_invite", lea_row["id"]))
+# Lea joins
+as_user(lea)
+j = ok(call("accept_invite", token))
+assert j["team"] == "Northwind leaders" and not j["already"]
+assert ok(call("accept_invite", token))["already"]
+mem = call("get_team")["membership"]
+assert mem["team"] == "Northwind leaders" and mem["manager"] == "Bea Boss"
+assert call("get_dashboard", now.date().isoformat())["team"]["tracks"] == ["core", "cfo"]
+assert call("get_invite", token)["mine"]
+as_user(eve)
+bad(call("accept_invite", token), "a used invite can't be reused")
+assert call("get_invite", token)["used"]
+# the manager sees progress, not answers
+as_user(boss)
+tv = call("get_team")["managed"]
+lv = next(m for m in tv["members"] if m["email"] == "lea@corp.example")
+assert lv["status"] == "active" and lv["display_name"] == "Lea Lead" and len(lv["tracks"]) == 2 and "link" not in lv
+assert "answer" not in json.dumps(lv) and tv["stats"]["active"] == 1
+ok(call("set_member_tracks", lv["id"], ["cfo", "core", "x"]))
+assert [x["id"] for x in call("get_team")["managed"]["members"][0]["tracks"]] == ["core", "cfo"]
+bad(call("set_member_tracks", lv["id"], []))
+ray = next(m for m in tv["members"] if m["email"] == "ray@corp.example")
+ok(call("resend_invite", ray["id"]))
+ok(call("remove_member", ray["id"]))
+assert call("get_invite", ray["link"].split("#join/")[1])["found"] is False, "a cancelled invite stops working"
+# one team at a time: Lea joins another team and leaves the first
+as_user(eve)
+ok(call("create_team", "Eve Co"))
+e_tok = ok(call("invite_people", "Lea, lea@corp.example", ["ceo"], False))["made"][0]["link"].split("#join/")[1]
+as_user(lea)
+assert call("get_invite", e_tok)["other_team"] == "Northwind leaders"
+ok(call("accept_invite", e_tok))
+assert call("get_team")["membership"]["team"] == "Eve Co"
+as_user(boss)
+assert next(m for m in call("get_team")["managed"]["members"] if m["email"] == "lea@corp.example")["status"] == "left"
+as_user(lea)
+ok(call("leave_team"))
+assert call("get_team")["membership"] is None and call("get_dashboard", now.date().isoformat())["team"] is None
+bad(call("leave_team"))
+as_user(admin)
+assert call("admin_overview")["teams"]["teams"] == 2
+as_user(boss)
+ok(call("update_team", "Northwind exec team"))
+bad(call("update_team", ""))
+ok(call("delete_team"))
+assert call("get_team")["managed"] is None and len(T.teams.search(owner=boss)) == 0
+
 # ---------------------------------------------------------------------------------- Privacy & Terms
 if "legal_server" in M:
     as_user(ana)
@@ -297,7 +385,7 @@ if "legal_server" in M:
 # ---------------------------------------------------------------------------------- every callable is covered by a permission check
 # A callable that changes data without require_user / a C.require_* check is a security hole. List the public ones here.
 PUBLIC = {"log_client_error", "session_ping", "get_me", "submit_feedback", "legal_state", "legal_accept", "get_catalog", "get_track", "get_module", "get_cases",
-          "get_case", "get_honour_roll", "get_credential"}
+          "get_case", "get_honour_roll", "get_credential", "get_invite"}
 for name, (f, need) in sorted(anvil.server.CALLABLES.items()):
     if name in PUBLIC:
         continue

@@ -127,7 +127,7 @@ def main():
     out = pathlib.Path(tempfile.mkdtemp(prefix=KEY + "-ui-"))
     failed = False
     only = args[args.index("--only") + 1] if "--only" in args else None  # e.g. --only a11y.js
-    for script, window in (("flow.js", "1280,1000"), ("exam.js", "1280,1000"), ("phone.js", "390,844"), ("admin.js", "1280,1000"), ("a11y.js", "1280,1000"),
+    for script, window in (("flow.js", "1280,1000"), ("exam.js", "1280,1000"), ("phone.js", "390,844"), ("admin.js", "1280,1000"), ("team.js", "1280,1000"), ("a11y.js", "1280,1000"),
                            ("design.js", "1280,1000"), ("design.js", "390,844")):
         if only and script != only:
             continue
@@ -144,14 +144,16 @@ def main():
     if "--shots" in args:
         dest = pathlib.Path(args[args.index("--shots") + 1])
         guest = [("landing", "#landing"), ("auth", "#auth/signup"), ("tracks", "#tracks"), ("track", "#tracks/cfo"), ("module", "#module/cfo-risk"),
-                 ("cases", "#cases"), ("case", "#cases/svb"), ("verify", "#verify/CSC-CFO-2026-T4WX9N"), ("certificate", "#certificate/CSC-FEL-2026-D9RV3C")]
+                 ("cases", "#cases"), ("case", "#cases/svb"), ("verify", "#verify/CSC-CFO-2026-T4WX9N"), ("certificate", "#certificate/CSC-FEL-2026-D9RV3C"),
+                 ("team", "#team"), ("board", "#tracks/board"), ("bmdmodule", "#module/bmd-ai-run"), ("hiring", "#tracks/hiring")]
         member = [("home", "#home"), ("study", "#study/core-crisis"), ("challenge", "#challenge/ch-cfo-risk"), ("exam", "#exam/core"),
-                  ("credentials", "#credentials"), ("profile", "#profile")]
+                  ("credentials", "#credentials"), ("profile", "#profile"), ("team", "#team")]
         for window, tag in (("1280,1000", ""), ("390,844", "_phone")):
             for theme in ("light", "dark"):
                 js = "UI.setTheme(%s)" % json.dumps(theme)
                 drive(None, window, dest / (theme + tag), [(n + tag + "_" + theme, h, js) for n, h in guest])
                 log = drive(None, window, dest / (theme + tag + "_in"), [(n + tag + "_" + theme, h, js) for n, h in member], seed=True)
+                log += drive("team.js", window, dest / (theme + tag + "_team"), [("teammanager" + tag + "_" + theme, "#team", js)])
                 problems = [l for l in log.splitlines() if "TIMEOUT" in l or "EXCEPTION" in l or "error" in l.lower()]
                 for p_ in problems[:5]:
                     print("  shots: " + p_[:300])

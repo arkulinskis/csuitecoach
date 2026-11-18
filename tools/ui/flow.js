@@ -39,12 +39,12 @@
 
   try {
     // ---- landing (visitors)
-    await page('#landing', () => $('.lp-hero h1') && $$('.cs-pcard').length >= 7, 'landing');
+    await page('#landing', () => $('.lp-hero h1') && $$('.cs-pcard').length >= 9, 'landing');
     ok($('.lp-hero a[href="#auth/signup"]'), 'landing: hero with an Enrol link');
     ok($('.lp-hero [data-cert] .holder') && $('.lp-hero [data-cert] .holder').textContent === 'Margaret Okafor', 'landing: the sample certificate is drawn');
-    ok($$('.cs-pcard').length === 7 && $$('.lp .cs-case').length === 3, 'landing: 7 programs and 3 cases from the server');
+    ok($$('.cs-pcard').length === 9 && $$('.lp .cs-case').length === 3, 'landing: 9 programs and 3 cases from the server');
     ok($('.ytf-cover') && $('[data-lk-open]'), 'landing: Watch section and Privacy & Terms link');
-    ok($$('.ui-nav a').map((a) => a.getAttribute('href')).join(',') === '#tracks,#cases,#verify', 'header: visitors get Programs, Casebook, Verify');
+    ok($$('.ui-nav a').map((a) => a.getAttribute('href')).join(',') === '#tracks,#cases,#team,#verify', 'header: visitors get Programs, Casebook, For teams, Verify');
 
     // ---- members-only page sends visitors to sign in, then back
     await page('#credentials', () => true);
@@ -68,9 +68,9 @@
     ok($('.anvil-role-avatar button') && /TP/.test($('.anvil-role-avatar button').textContent), 'header: account button with initials');
 
     // ---- dashboard
-    await page('#home', () => $$('.hm-track').length >= 7, 'home');
+    await page('#home', () => $$('.hm-track').length >= 9, 'home');
     ok(/Test/.test($('.hm-top h1').textContent), 'dashboard greets the new member by first name');
-    ok($$('.hm-track').length === 7, 'dashboard lists the 7 programs');
+    ok($$('.hm-track').length === 9, 'dashboard lists the 9 programs');
     ok($('.hm-next a[href="#module/core-decide"]'), 'dashboard suggests the first module');
     ok($$('.ui-nav a').length === 5 && $$('.anvil-role-hm-week .wd').length === 7, 'members get 5 header links; the week strip has 7 days');
 
@@ -123,8 +123,8 @@
     // ---- review, programs, examination, casebook
     await page('#study/review', () => vis($('.ui-empty')) || vis($('.cs-card')), 'review');
     ok(/Nothing due/.test(text()), 'nothing due right after learning');
-    await page('#tracks', () => $$('.cs-pcard').length >= 7, 'programs');
-    ok($$('.cs-pcard').length === 7 && $('.tr-fellow'), 'programs catalogue shows 7 programs and the Fellowship');
+    await page('#tracks', () => $$('.cs-pcard').length >= 9, 'programs');
+    ok($$('.cs-pcard').length === 9 && $('.tr-fellow'), 'programs catalogue shows 9 programs and the Fellowship');
     await page('#tracks/core', () => $$('.tr-mod').length >= 7, 'one program');
     ok($$('.tr-mod').length === 7 && /Complete/.test($('.tr-mods').textContent), 'program page lists 6 modules + the examination, with progress');
     await page('#exam/core', () => $$('.ex-paper').some(vis), 'examination');

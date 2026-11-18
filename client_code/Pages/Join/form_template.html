@@ -1,0 +1,33 @@
+<anvil-form layout="C_Suite_Coach.Layouts.Shell">
+  <anvil-block slot="content">
+    <div class="tm">
+      <anvil-component type="C_Suite_Coach.Components.Hero" name="hero"></anvil-component>
+      <div class="ui-wrap ui-narrow tm-body">
+        <div class="ui-empty" anvil:name="not_found">
+          <i class="ic ic-link"></i>
+          <h2>This invite link isn't valid any more</h2>
+          <p>It may have been cancelled, or already used. Ask your team manager for a new link.</p>
+          <a class="ui-btn" href="#landing">About C-Suite Coach</a>
+        </div>
+
+        <div class="ui-card ui-stack tm-join" anvil:name="invite_part">
+          <h2 class="cs-ph">Your programs</h2>
+          <anvil-component type="RepeatingPanel" name="tracks_panel" prop:item_template="C_Suite_Coach.Items.JoinTrack" prop:role='["tm-join-tracks"]'></anvil-component>
+          <div class="tm-privacy">
+            <h3><i class="ic ic-lock"></i>What your team manager will see</h3>
+            <p class="small" anvil:dom-node="privacy"></p>
+          </div>
+          <anvil-component type="Label" name="note" prop:role='["msg-note"]' prop:visible="false"></anvil-component>
+          <div class="ui-row" anvil:name="guest_actions">
+            <anvil-component type="Button" name="signup_button" prop:text="Create your account" prop:role='["btn", "btn-primary", "ic-user"]'></anvil-component>
+            <anvil-component type="Button" name="login_button" prop:text="I already have an account" prop:role='["btn"]'></anvil-component>
+          </div>
+          <div class="ui-row" anvil:name="member_actions">
+            <anvil-component type="Button" name="join_button" prop:text="Join the team" prop:role='["btn", "btn-primary", "ic-users"]'></anvil-component>
+          </div>
+          <p class="fine-print">You can leave the team at any time from the Team page. Everything you earn stays yours.</p>
+        </div>
+      </div>
+    </div>
+  </anvil-block>
+</anvil-form>

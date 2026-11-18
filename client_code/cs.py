@@ -9,6 +9,7 @@ progress ring, confetti), dates in the browser's language, photos, and small tex
     cs.js(value)              a Python dict/list as a real JS object (for the engines)
     cs.set_text(node, text)   textContent on an anvil:dom-node
     cs.title(text)            the browser tab title: "<text> · C-Suite Coach"
+    cs.copy(text, done)       copy to the clipboard (toast), or show it in a box to copy by hand
 """
 import json
 
@@ -71,3 +72,15 @@ def tone_badge(tone):
     if tone == "cautionary":
         return "Cautionary", ["badge", "badge-bad"]
     return "Mixed lessons", ["badge", "badge-warn"]
+
+
+def copy(text, done="Link copied"):
+    """Copy to the clipboard with a toast; when the browser says no, show the text in a box to copy by hand."""
+    from anvil import alert
+    from . import state
+    try:
+        window.navigator.clipboard.writeText(text)
+        state.toast(done, "ok")
+    except Exception:
+        from .Dialogs.LinkBox import LinkBox
+        alert(LinkBox(link=text), buttons=[], role="app-dialog")

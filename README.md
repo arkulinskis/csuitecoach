@@ -1,7 +1,8 @@
 # C-Suite Coach
 
 **C-Suite Coach Institute** is an executive-education and certification app for current and aspiring C-suite leaders
-(CEO, CFO, COO, CHRO, CTO/CIO/CISO, CMO). Members study research briefings and real business cases, drill what they learn
+(CEO, CFO, COO, CHRO, CTO/CIO/CISO, CMO), plus the board's big mandates (M&A, activist investors, AI governance) and
+hiring judgment. Members study research briefings and real business cases, drill what they learn
 with spaced repetition (the CAF Guide method: active recall, reveal, rate yourself, Leitner boxes), practise decisions in
 written boardroom challenges, sit a final examination, and earn certificates with public verification codes. The
 Institute is the app's own authority: the certificates say so honestly. Built on [Anvil](https://anvil.works).
@@ -13,14 +14,22 @@ Institute is the app's own authority: the certificates say so honestly. Built on
 ## What it does
 
 **For everyone (no account needed):**
-- **Landing page:** photo hero with a sample certificate, the method (4 steps), the 7 programs, Casebook teasers, good vs
-  bad advice, a quote, credential verification, the Honour Roll, FAQ (including "is it accredited?": no).
-- **Programs** (`#tracks`, `#tracks/<id>`): 7 programs (Executive Foundations + 6 role programs), each with modules,
+- **Landing page:** photo hero with a sample certificate, the method (4 steps), the 9 programs, Casebook teasers, good vs
+  bad advice, a quote, credential verification, the Honour Roll, For leadership teams (team plan), FAQ (including "is it accredited?": no).
+- **Programs** (`#tracks`, `#tracks/<id>`): 9 programs (Executive Foundations + 6 role programs + 2 specialist programs added 2026-11-18:
+  **Board Mandates** (M&A deal thesis, M&A integration, activist investors, AI governance oversight, AI governance in
+  practice) and **Hiring Judgment** (the selection evidence, then judging product, marketing, operations and project
+  leaders)), each with modules,
   outcomes, the final examination and the Fellowship explained.
 - **Module briefings** (`#module/<id>`): readable by anyone: the briefing, Do / Avoid lists, case files, sources.
-- **The Casebook** (`#cases`, `#cases/<id>`): 24 real, sourced cases (Tylenol, Ford's red slide, Intel, IBM, Kodak,
+- **The Casebook** (`#cases`, `#cases/<id>`): 40 real, sourced cases (Tylenol, Ford's red slide, Intel, IBM, Kodak,
   Blockbuster, Qwikster, Starbucks, Microsoft, Unilever, Wells Fargo, Boeing 737 MAX, GM, BP, Maersk, Equifax,
-  CrowdStrike, Southwest, SVB, Theranos, Disney, Patagonia, PepsiCo, Teledyne), filterable by exemplary / cautionary / mixed.
+  CrowdStrike, Southwest, SVB, Theranos, Disney, Patagonia, PepsiCo, Teledyne; since 2026-11-18 also Disney-Pixar,
+  DaimlerChrysler, AOL Time Warner, HP-Autonomy, Engine No. 1 vs Exxon, Trian vs P&G, Air Canada's chatbot, Zillow
+  Offers, Amazon's hiring AI, Klarna's AI service, AI washing, J.C. Penney, Yahoo's COO, HealthCare.gov, Google's
+  Project Oxygen, Tim Cook's hire at Apple), filterable by exemplary / cautionary / mixed.
+- **Team plan page** (`#team`): what the team plan does, with sign-up; **team invites** (`#join/<token>`): who invited
+  you, the programs, what the manager will see, then create an account or sign in and come back to join.
 - **Verify a credential** (`#verify/<code>`) and **certificate pages** (`#certificate/<code>`), plus the public **Honour Roll**.
 
 **For members:**
@@ -35,14 +44,22 @@ Institute is the app's own authority: the certificates say so honestly. Built on
 - **Final examination** (`#exam/<track>`), open when every module of the program is complete: honour code, Part I recall
   round (12 random drills from the program, 80% "Got it"), Part II capstone case (rubric, 70%). Pass → a certificate
   `CSC-<CODE>-<YEAR>-<6 chars>` (+200 XP); fail → retake after 30 minutes, missed drills go back to box 0.
-- **Fellowship:** Foundations + two role certificates issue the Fellow of the C-Suite Coach Institute (FCSCI) certificate
+- **Fellowship:** Foundations + any two other program certificates issue the Fellow of the C-Suite Coach Institute (FCSCI) certificate
   automatically (navy and gold design).
 - **Credentials** (`#credentials`): certificates, the path to Fellowship, Honour Roll opt-in. Certificate pages print to
   PDF (landscape), copy the verification link, and "Add to LinkedIn" (for the holder).
 - **Profile:** name (printed on future certificates), job title, Honour Roll opt-in, theme, password reset.
+- **Team plan** (`#team`, 2026-11-18, free): anyone can create one team and becomes its manager. Invite leaders by
+  pasting "Name, email" lines (up to 50 at a time, 200 per team), tick the programs they should complete, and each
+  gets a personal link `#join/<token>` (emailed by Anvil's email service, and copyable). The invitee creates an account
+  or signs in and joins; one team at a time (joining another leaves the old one). The manager sees stats (members,
+  invites waiting, average progress, certificates), each person's assigned programs with modules done and progress,
+  certificates, drills learned, streak and last study day, never their written answers; can change programs, email an
+  invite again, cancel invites, remove members, rename or delete the team, and download a CSV. Members see
+  "Assigned by <team>" on the dashboard and can leave from `#team`.
 
 **For admins** (`#admin`; your admin email (App Secret `admin_emails`) becomes an admin on first sign-in):
-- **Overview:** members, learners, modules completed, challenge attempts, examinations sat, credentials issued, feedback.
+- **Overview:** members, learners, teams, modules completed, challenge attempts, examinations sat, credentials issued, feedback.
 - **Credentials:** search every certificate, revoke or reinstate (a revoked certificate shows a red REVOKED stamp).
 - **Feedback inbox**, **Users** (make admin, disable), **Demo data**: six fictional executives with progress and
   certificates (sample records), on the Honour Roll; remove or reload.
@@ -67,7 +84,7 @@ What this project uses besides its own code. Generated by `APP_MAKER/tools/libra
 
 **Built into the browser:** localStorage, Clipboard.
 
-**Anvil platform:** Anvil, Anvil Data Tables, Anvil JS bridge (anvil.js), Anvil Users, Anvil Google service.
+**Anvil platform:** Anvil, Anvil Data Tables, Anvil JS bridge (anvil.js), Anvil Secrets, Anvil Users, Anvil Google service, Anvil Email, Anvil Media.
 
 **Build and test tools (not shipped):** axe-core, Node.js, Headless Chrome (DevTools Protocol), PyYAML.
 

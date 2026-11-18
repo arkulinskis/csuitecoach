@@ -9,7 +9,7 @@ description: Context, workflow and recipes for C-Suite Coach (folder csuitecoach
 calls what, so changes don't need a re-read of the code. Regenerate it after every change
 (`python -I APP_MAKER\standard\app_map.py csuitecoach`) and commit it with the change.
 
-**What it is:** an executive-education and certification app for current and aspiring C-suite leaders. Visitors browse 7 programs, module briefings and a Casebook of 24 real cases; members drill recall cards and 'advice calls' on Leitner spaced repetition (the CAF Guide method: reveal, rate yourself), write answers to boardroom challenges scored against a rubric, sit final examinations and earn certificates with public verification codes. The 'C-Suite Coach Institute' is the app's own authority, and the app says honestly that its certificates are not accredited.
+**What it is:** an executive-education and certification app for current and aspiring C-suite leaders. Visitors browse 9 programs (7 role paths + Board Mandates + Hiring Judgment, 34 modules), module briefings and a Casebook of 40 real cases; members drill recall cards and 'advice calls' on Leitner spaced repetition (the CAF Guide method: reveal, rate yourself), write answers to boardroom challenges scored against a rubric, sit final examinations and earn certificates with public verification codes. The 'C-Suite Coach Institute' is the app's own authority, and the app says honestly that its certificates are not accredited.
 
 **Where it lives:**
 - Folder `C:\Users\arkvi\Documents\CLAUDE\csuitecoach-forms\` = the git clone of **github.com/arkulinskis/csuitecoach**, branch `master`.
@@ -118,6 +118,22 @@ tools/                     check.py, assets.py, build_icons.py, make_icons.py, u
   `python -I APP_MAKER/tools/design_check.py csuitecoach` (source; check.py prints its summary) and tools/ui/design.js
   (rendered, desktop + phone, inside ui_test.py; add new pages to its PUBLIC/MEMBER). Deliberate exceptions:
   `design-ok: <rule>` comment on the line.
+
+## Specialist programs and the team plan (2026-11-18)
+
+- **Content files:** `server_code/content_mandates.py` assembles two programs from separately researched files:
+  `content_board_ma.py` (M&A deal + integration, activist investors, their cases, capstone `cap-bmd`),
+  `content_board_ai.py` (AI governance: board oversight + practice, cases) and `content_hiring.py` (TRACK `hiring`/HIR,
+  5 modules, cases, capstone `cap-hir`). Track `board`/BMD is defined in content_mandates.py. Curriculum.py adds
+  `content_mandates.TRACKS`; content_cases.py appends `content_mandates.CASES`. These modules have 8 cards and 4
+  advice calls (the older ones 6 and 3). Legal facts move fast: the AI file says "as of November 2026" (EU AI Act
+  Digital Omnibus 2026/1744, Colorado SB 26-189): re-check before reusing.
+- **Team plan:** `server_code/Teams.py` (tables `teams`, `team_members`; status invited | active | left | removed),
+  pages `Pages/Team` (#team, public: visitors get the pitch) and `Pages/Join` (#join/<token>, public), items
+  `TeamMemberRow`, `TeamTrack`, `TrackPick`, `JoinTrack`, dialog `PickPrograms`. Privacy line: managers see progress,
+  certificates, drills learned, streak, last study day; never answers or exam details (`_member_view`). Invite emails
+  go through `anvil.email` (service in anvil.yaml); never put the manager's email in them. Dashboard gets
+  `team` from `Teams.team_for_dashboard`. Tests: server tests "team plan" block, tools/ui/team.js (whole journey).
 
 ## Recipes
 

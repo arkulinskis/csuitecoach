@@ -1,6 +1,7 @@
 """The curriculum: programs (tracks) -> modules -> drill items (cards + advice calls) and challenges.
 
-Content lives in content_core.py, content_roles_a.py, content_roles_b.py and the Casebook in content_cases.py.
+Content lives in content_core.py, content_roles_a.py, content_roles_b.py, content_mandates.py (Board Mandates +
+Hiring Judgment, 2026-11-18) and the Casebook in content_cases.py.
 This module assembles it into lookups and serves the public catalogue pages (no sign-in needed to browse).
 
 Ids: track "cfo"; module "cfo-risk"; drill item "cfo-risk:c3" (card) / "cfo-risk:a1" (advice call);
@@ -10,7 +11,7 @@ import anvil.server
 from anvil.tables import app_tables
 
 from . import common as C
-from . import content_core, content_roles_a, content_roles_b
+from . import content_core, content_roles_a, content_roles_b, content_mandates
 from .content_cases import CASES, CASE_BY_ID
 
 PASS_CHALLENGE = 70        # % of the rubric to pass a module challenge or the exam scenario
@@ -19,7 +20,7 @@ EXAM_ITEMS = 12            # recall items in a final examination
 
 FELLOW = {"id": "fellow", "code": "FEL", "order": 99, "title": "Fellowship of the Institute",
           "credential": "Fellow of the C-Suite Coach Institute (FCSCI)", "photo": "ph-boardroom",
-          "blurb": "Awarded automatically to holders of Executive Foundations and two role certificates."}
+          "blurb": "Awarded automatically to holders of Executive Foundations and two other program certificates."}
 
 TRACKS = []          # ordered list of track dicts (with "modules": [ids], "capstone": {...})
 TRACK_BY_ID = {}
@@ -49,7 +50,7 @@ def _add_track(track, modules, capstone):
 
 
 _add_track(content_core.TRACK, content_core.MODULES, content_core.CAPSTONE)
-for _pack in content_roles_a.TRACKS + content_roles_b.TRACKS:
+for _pack in content_roles_a.TRACKS + content_roles_b.TRACKS + content_mandates.TRACKS:
     _add_track(_pack["track"], _pack["modules"], _pack["capstone"])
 TRACKS.sort(key=lambda t: t["order"])
 

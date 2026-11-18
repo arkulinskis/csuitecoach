@@ -1,0 +1,19 @@
+<article class="tm-row">
+  <div class="tm-row-head">
+    <anvil-component type="Label" name="initials" prop:role='["tm-avatar"]'></anvil-component>
+    <div class="tm-who">
+      <span class="tm-name" anvil:dom-node="name"></span>
+      <span class="tm-email" anvil:dom-node="email"></span>
+    </div>
+    <anvil-component type="Label" name="status_label"></anvil-component>
+  </div>
+  <p class="tm-facts" anvil:dom-node="facts"></p>
+  <anvil-component type="RepeatingPanel" name="tracks_panel" prop:item_template="C_Suite_Coach.Items.TeamTrack" prop:role='["tm-tracks"]'></anvil-component>
+  <p class="tm-creds" anvil:name="creds_line"><i class="ic ic-award"></i><span anvil:dom-node="creds"></span></p>
+  <div class="ui-row tm-actions">
+    <anvil-component type="Button" name="copy_button" prop:text="Copy invite link" prop:role='["btn", "btn-sm", "ic-copy"]'></anvil-component>
+    <anvil-component type="Button" name="resend_button" prop:text="Email it again" prop:role='["btn", "btn-sm", "btn-ghost", "ic-mail"]'></anvil-component>
+    <anvil-component type="Button" name="programs_button" prop:text="Programs" prop:role='["btn", "btn-sm", "btn-ghost", "ic-edit"]'></anvil-component>
+    <anvil-component type="Button" name="remove_button" prop:text="Remove" prop:role='["btn", "btn-sm", "btn-ghost", "btn-danger", "ic-x"]'></anvil-component>
+  </div>
+</article>

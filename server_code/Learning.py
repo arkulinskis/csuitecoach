@@ -14,6 +14,7 @@ import anvil.tables as tables
 from . import common as C
 from . import Curriculum as K
 from . import DemoData
+from . import Teams
 
 BOX_DAYS = [0, 1, 3, 7, 16, 35, 90]
 MAX_BOX = len(BOX_DAYS) - 1
@@ -115,7 +116,7 @@ def get_dashboard(client_day=None):
             "credentials": [{"track": k, "title": K.track_title(k), "credential": K.credential_name(k), "code": v["code"], "issued": v["issued"]}
                             for k, v in sorted(creds.items(), key=lambda kv: kv[1]["issued"] or "")],
             "week": [{"day": d.isoformat(), "active": d in seen_days} for d in week],
-            "case": K.case_brief(case), "honour": _honour(6)}
+            "case": K.case_brief(case), "honour": _honour(6), "team": Teams.team_for_dashboard(me)}
 
 
 def _honour(limit):

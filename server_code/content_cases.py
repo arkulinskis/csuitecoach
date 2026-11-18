@@ -291,4 +291,6 @@ CASES = [
     },
 ]
 
+from .content_mandates import CASES as _SPECIALIST  # noqa: E402  (Board Mandates + Hiring Judgment cases)
+CASES += _SPECIALIST
 CASE_BY_ID = {c["id"]: c for c in CASES}

@@ -26,7 +26,7 @@
   }
   try {
     for (const h of ['#landing', '#auth', '#auth/signup', '#tracks', '#tracks/cfo', '#module/cfo-risk', '#cases', '#cases/svb',
-                     '#verify/CSC-CFO-2026-T4WX9N', '#certificate/CSC-FEL-2026-D9RV3C', '#certificate/NOPE']) await check(h);
+                     '#verify/CSC-CFO-2026-T4WX9N', '#certificate/CSC-FEL-2026-D9RV3C', '#certificate/NOPE', '#team', '#join/nope-not-a-token']) await check(h);
     // sign up so the member pages can be checked too
     location.hash = '#auth/signup';
     await until(() => window.UI_READY && $$('.au-card input').length >= 3, 'sign-up form');
@@ -36,7 +36,7 @@
     $$('.anvil-role-btn-block button').find((b) => /Create account/.test(b.textContent)).click();
     await until(() => location.hash === '#home' && window.UI_READY, 'signed in', 30000);
     for (const h of ['#home', '#tracks/core', '#module/core-board', '#study/core-crisis', '#study/review', '#challenge/ch-cfo-risk',
-                     '#exam/core', '#credentials', '#profile', '#landing']) await check(h);
+                     '#exam/core', '#credentials', '#profile', '#team', '#landing']) await check(h);
     log.push(bad.length ? 'PROBLEMS: ' + bad.join(' | ') : 'PASSED');
     return { ok: !bad.length, log: log };
   } catch (e) {

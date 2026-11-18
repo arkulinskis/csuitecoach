@@ -33,13 +33,13 @@ SEO = {
  "category": "EducationalApplication",
  "audience": "Current and aspiring CEOs, CFOs, COOs, CHROs, CTOs, CIOs, CISOs and CMOs",
  "about": [
-  "C-Suite Coach Institute is an executive-education and certification app for current and aspiring C-suite leaders. Members study research briefings and 24 real, sourced business cases, from Tylenol and Kodak to the Boeing 737 MAX.",
+  "C-Suite Coach Institute is an executive-education and certification app for current and aspiring C-suite leaders. Members study research briefings and 40 real, sourced business cases, from Tylenol and Kodak to the Boeing 737 MAX.",
   "They drill what they learn with spaced repetition, practise decisions in written boardroom challenges, sit a final examination and earn certificates with public verification codes. The Institute is the app's own authority; it is not an accredited body, and the certificates say so."
  ],
  "features": [
-  "Seven programs: Executive Foundations plus six role programs",
+  "Nine programs: Executive Foundations, six role programs, Board Mandates (M&A, activist investors, AI governance) and Hiring Judgment",
   "Module briefings with Do and Avoid lists and sources",
-  "A casebook of 24 real, sourced business cases",
+  "A casebook of 40 real, sourced business cases",
   "Spaced-repetition drills",
   "Written boardroom challenges and a final examination",
   "Certificates with public verification codes"
