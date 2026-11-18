@@ -27,7 +27,11 @@ SEO = {
   "business case studies",
   "executive coaching app",
   "aspiring executive",
-  "board decision making"
+  "board decision making",
+  "m&a",
+  "ai governance",
+  "activist investors",
+  "executive hiring"
  ],
  "type": "Service",
  "category": "EducationalApplication",
@@ -42,7 +46,8 @@ SEO = {
   "A casebook of 40 real, sourced business cases",
   "Spaced-repetition drills",
   "Written boardroom challenges and a final examination",
-  "Certificates with public verification codes"
+  "Certificates with public verification codes",
+  "Team plan: enrol your leaders with personal invite links, assign programs and follow their progress"
  ],
  "faq": [
   [
@@ -51,15 +56,19 @@ SEO = {
   ],
   [
    "Which roles are covered?",
-   "CEO, CFO, COO, CHRO, CTO/CIO/CISO and CMO, plus an Executive Foundations program."
+   "CEO, CFO, COO, CHRO, CTO/CIO/CISO and CMO, plus Executive Foundations, Board Mandates (M&A, activist investors, AI governance) and Hiring Judgment (judging product, marketing, operations and project leaders)."
   ],
   [
    "Can I read the material before signing up?",
    "Yes. Program pages, module briefings and the casebook are open to everyone."
+  ],
+  [
+   "Can a company enrol its leaders?",
+   "Yes. A team manager invites leaders by email with personal links, assigns programs and sees each person's progress and certificates. Written answers stay private to each member."
   ]
  ],
  "site": "https://csuite-coach.anvil.app",
- "updated": "2026-11-16",
+ "updated": "2026-11-18",
  "icon": "icon-512.png",
  "colors": {
   "bg": "#14213d",

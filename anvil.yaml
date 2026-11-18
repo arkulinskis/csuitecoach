@@ -566,10 +566,9 @@ db_schema:
     server: full
     title: Users
 metadata:
-  description: 'Executive training for the C-suite: real business cases, boardroom challenges and spaced-repetition drills.
-    Earn C-Suite Coach Institute certificates.'
-  logo_img: asset:icon-512.png
-  title: 'C-Suite Coach Institute: executive training and certificates'
+  description: "Executive training for the C-suite: real business cases, boardroom challenges and spaced-repetition drills. Earn C-Suite Coach Institute certificates."
+  logo_img: "asset:icon-512.png"
+  title: "C-Suite Coach Institute: executive training and certificates"
 name: C-Suite Coach
 native_deps:
   head_html: |
@@ -577,7 +576,7 @@ native_deps:
     <!-- seo:start (APP_MAKER/seo: edit seo/apps/csuitecoach.json and run seo.py, not here) -->
     <link rel="canonical" href="https://csuite-coach.anvil.app/">
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-    <meta name="keywords" content="executive education online, C-suite training, CEO training program, CFO course, leadership certification, business case studies, executive coaching app, aspiring executive, board decision making">
+    <meta name="keywords" content="executive education online, C-suite training, CEO training program, CFO course, leadership certification, business case studies, executive coaching app, aspiring executive, board decision making, m&amp;a, ai governance, activist investors, executive hiring">
     <meta name="author" content="Arkvital">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="C-Suite Coach">
@@ -597,11 +596,11 @@ native_deps:
     <noscript><div class="seo-noscript">
     <h1>C-Suite Coach Institute: executive training and certificates</h1>
     <p>Executive training for the C-suite: real business cases, boardroom challenges and spaced-repetition drills. Earn C-Suite Coach Institute certificates.</p>
-    <p>C-Suite Coach Institute is an executive-education and certification app for current and aspiring C-suite leaders. Members study research briefings and 24 real, sourced business cases, from Tylenol and Kodak to the Boeing 737 MAX.</p>
+    <p>C-Suite Coach Institute is an executive-education and certification app for current and aspiring C-suite leaders. Members study research briefings and 40 real, sourced business cases, from Tylenol and Kodak to the Boeing 737 MAX.</p>
     <p>They drill what they learn with spaced repetition, practise decisions in written boardroom challenges, sit a final examination and earn certificates with public verification codes. The Institute is the app&#x27;s own authority; it is not an accredited body, and the certificates say so.</p>
     <p>Who it's for: Current and aspiring CEOs, CFOs, COOs, CHROs, CTOs, CIOs, CISOs and CMOs</p>
-    <h2>What it does</h2><ul><li>Seven programs: Executive Foundations plus six role programs</li><li>Module briefings with Do and Avoid lists and sources</li><li>A casebook of 24 real, sourced business cases</li><li>Spaced-repetition drills</li><li>Written boardroom challenges and a final examination</li><li>Certificates with public verification codes</li></ul>
-    <h2>Questions</h2><h3>Is the certificate accredited?</h3><p>No. The C-Suite Coach Institute is the app&#x27;s own authority, and the certificates say so honestly.</p><h3>Which roles are covered?</h3><p>CEO, CFO, COO, CHRO, CTO/CIO/CISO and CMO, plus an Executive Foundations program.</p><h3>Can I read the material before signing up?</h3><p>Yes. Program pages, module briefings and the casebook are open to everyone.</p>
+    <h2>What it does</h2><ul><li>Nine programs: Executive Foundations, six role programs, Board Mandates (M&amp;A, activist investors, AI governance) and Hiring Judgment</li><li>Module briefings with Do and Avoid lists and sources</li><li>A casebook of 40 real, sourced business cases</li><li>Spaced-repetition drills</li><li>Written boardroom challenges and a final examination</li><li>Certificates with public verification codes</li><li>Team plan: enrol your leaders with personal invite links, assign programs and follow their progress</li></ul>
+    <h2>Questions</h2><h3>Is the certificate accredited?</h3><p>No. The C-Suite Coach Institute is the app&#x27;s own authority, and the certificates say so honestly.</p><h3>Which roles are covered?</h3><p>CEO, CFO, COO, CHRO, CTO/CIO/CISO and CMO, plus Executive Foundations, Board Mandates (M&amp;A, activist investors, AI governance) and Hiring Judgment (judging product, marketing, operations and project leaders).</p><h3>Can I read the material before signing up?</h3><p>Yes. Program pages, module briefings and the casebook are open to everyone.</p><h3>Can a company enrol its leaders?</h3><p>Yes. A team manager invites leaders by email with personal links, assigns programs and sees each person&#x27;s progress and certificates. Written answers stay private to each member.</p>
     <p><a href="https://csuite-coach.anvil.app/about">About C-Suite Coach</a> &middot; <a href="https://csuite-coach.anvil.app/llms.txt">C-Suite Coach for AI assistants</a> &middot; Made by <a href="https://arkvital.com">Arkvital</a>, Montreal, Canada. C-Suite Coach needs JavaScript in your browser.</p>
     </div></noscript>
     <!-- seo:end -->
