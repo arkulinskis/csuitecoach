@@ -84,13 +84,40 @@ def get_exam(track_id):
         pick = random.sample(ids, min(K.EXAM_ITEMS, len(ids)))
         ex = app_tables.exams.add_row(user=me, track=track_id, started=C.now(), finished=None, card_score=0, scenario_score=0,
                                       passed=False, detail={"items": pick}, is_demo=False)
-    pick = (ex["detail"] or {}).get("items") or []
+    detail = ex["detail"] or {}
+    pick = detail.get("items") or []
+    capstone = K.challenge_public(t["capstone"])
+    if detail.get("answer"):  # back after a reload: the answer is already locked, so the criteria may show again
+        capstone.update(K.challenge_reveal(t["capstone"]), answer=detail["answer"])
     return C.ok(state="ready", exam_id=ex.get_id(), items=[K.item_public(i) for i in pick if i in K.ITEMS],
-                capstone=K.challenge_public(t["capstone"]), **out)
+                capstone=capstone, **out)
+
+
+@anvil.server.callable(require_user=True)
+def lock_exam_answer(exam_id, answer):
+    """Part II: save the capstone answer on the server first, then send the model answer and rubric. A locked answer
+    can't be changed (submit_exam scores the saved one), so seeing the examiners' notes can't improve it."""
+    me = C.require_user()
+    ex = C.row_by_id(app_tables.exams, exam_id)
+    if ex is None or ex["user"] != me:
+        return C.fail("That examination isn't yours.")
+    if ex["finished"]:
+        return C.fail("This examination was already submitted.")
+    t = K.TRACK_BY_ID[ex["track"]]
+    detail = dict(ex["detail"] or {})
+    if not detail.get("answer"):
+        answer = C.text(answer, 8000, multiline=True)
+        if len(answer) < 80:
+            return C.fail("Write your answer to the scenario: at least a short paragraph (80 characters).")
+        detail.update(answer=answer, answer_locked=C.iso(C.now()))
+        ex["detail"] = detail
+    return C.ok(answer=detail["answer"], **K.challenge_reveal(t["capstone"]))
 
 
 @anvil.server.callable(require_user=True)
 def submit_exam(exam_id, ratings, answer, points, honour, client_day=None):
+    """Scores the paper. The capstone answer is the one saved by lock_exam_answer; `answer` is ignored (kept so older
+    pages still call this the same way)."""
     me = C.require_user()
     ex = C.row_by_id(app_tables.exams, exam_id)
     if ex is None or ex["user"] != me:
@@ -104,9 +131,9 @@ def submit_exam(exam_id, ratings, answer, points, honour, client_day=None):
     pick = (ex["detail"] or {}).get("items") or []
     if not isinstance(ratings, dict) or any(i not in ratings for i in pick):
         return C.fail("Rate every recall item before submitting.")
-    answer = C.text(answer, 8000, multiline=True)
+    answer = (ex["detail"] or {}).get("answer") or ""
     if len(answer) < 80:
-        return C.fail("Write your answer to the scenario: at least a short paragraph (80 characters).")
+        return C.fail("Submit your answer to the capstone scenario first, then tick the criteria.")
     got = sum(1 for i in pick if ratings.get(i) is True)
     drill = int(round(100.0 * got / len(pick))) if pick else 0
     clean, scenario = L.score_points(points, len(t["capstone"]["rubric"]))

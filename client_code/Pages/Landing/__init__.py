@@ -3,7 +3,7 @@ from anvil import *
 from anvil.js import window
 
 from ._anvil_designer import LandingTemplate
-from ... import router, state
+from ... import cs, router, state
 
 # The app's video on the Addanapp YouTube channel (APP_MAKER/youtube/manifest.json), shown in the Watch section.
 YT_VIDEO = "Z5MC3w_B89A"
@@ -35,6 +35,8 @@ class Landing(LandingTemplate):
             n["n_cases"].textContent = str(cat["cases"])
             n["n_items"].textContent = str(cat["totals"]["items"])
             n["n_challenges"].textContent = str(cat["totals"]["challenges"])
+        call = anvil.server.call_s("get_boardroom_call", cs.today())
+        self.call_card.call = call if call and call.get("ok") else None
         cases = anvil.server.call_s("get_cases")
         self.cases_panel.items = [c for c in cases["cases"] if c["id"] in SHOWN_CASES]
         honour = anvil.server.call_s("get_honour_roll")["items"][:6]

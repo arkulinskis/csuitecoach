@@ -59,6 +59,7 @@ class Tracks(TracksTemplate):
         self.modules_panel.items = t["modules"]
         cs.set_text(self.dom_nodes["cap_text"], "A recall round of 12 drills from the whole program and the capstone case, "
                     "\u201c%s\u201d. Pass both to be issued the %s." % (t["capstone"]["title"], t["credential"]))
+        self.dom_nodes["cap_ninety"].hidden = t["id"] != "core"  # Foundations' capstone is "The First Board Meeting"
         self.cap_certified.visible = bool(s and s["certified"])
         self.dom_nodes["cap_begin_a"].hidden = not (s and not s["certified"] and s["exam_ready"])
         self.cap_locked.visible = bool(s and not s["certified"] and not s["exam_ready"])

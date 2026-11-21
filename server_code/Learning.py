@@ -15,6 +15,8 @@ from . import common as C
 from . import Curriculum as K
 from . import DemoData
 from . import Teams
+from . import Reviews
+from . import Transition
 
 BOX_DAYS = [0, 1, 3, 7, 16, 35, 90]
 MAX_BOX = len(BOX_DAYS) - 1
@@ -116,7 +118,18 @@ def get_dashboard(client_day=None):
             "credentials": [{"track": k, "title": K.track_title(k), "credential": K.credential_name(k), "code": v["code"], "issued": v["issued"]}
                             for k, v in sorted(creds.items(), key=lambda kv: kv[1]["issued"] or "")],
             "week": [{"day": d.isoformat(), "active": d in seen_days} for d in week],
-            "case": K.case_brief(case), "honour": _honour(6), "team": Teams.team_for_dashboard(me)}
+            "case": K.case_brief(case), "honour": _honour(6), "team": Teams.team_for_dashboard(me),
+            "call": K.call_summary(day, me), "calibration": _safe(Reviews.calibration, me),
+            "transition": _safe(Transition.dashboard_card, me, day)}
+
+
+def _safe(fn, *args):
+    """Cards that read tables added on 2026-11-20 (reviews, transitions): the dashboard keeps working before the user
+    accepts the Schema Mismatch alert in the Anvil editor."""
+    try:
+        return fn(*args)
+    except Exception:
+        return None
 
 
 def _honour(limit):
@@ -230,17 +243,19 @@ def _attempt(r):
 
 
 @anvil.server.callable(require_user=True)
-def get_challenge(challenge_id):
+def get_challenge(challenge_id, client_day=None):
+    """A module challenge for a member, with their attempts. No model answer or rubric here: the page asks
+    reveal_challenge for them once the answer is written."""
     me = C.require_user()
     ch = K.CHALLENGES.get(challenge_id)
     if ch is None or not ch.get("module"):
         return C.fail("That challenge doesn't exist.")
     m = K.MODULES[ch["module"]]
+    day = today(client_day)
     rows = sorted(app_tables.attempts.search(user=me, challenge=challenge_id), key=lambda r: r["created"], reverse=True)
-    return C.ok(challenge=K.challenge_public(ch), module={"id": m["id"], "title": m["title"], "n": m["n"],
-                                                          "track": K.TRACK_BY_ID[m["track"]]["title"], "track_id": m["track"]},
+    return C.ok(challenge=K.challenge_public(ch), module=K.module_ref(m),
                 attempts=[_attempt(r) for r in rows[:10]], best=max([int(r["score"] or 0) for r in rows] or [0]),
-                pass_mark=K.PASS_CHALLENGE)
+                pass_mark=K.PASS_CHALLENGE, is_call=challenge_id == K.call_for(day), days_left=8 - day.isoweekday())
 
 
 def score_points(points, n):
@@ -264,8 +279,8 @@ def submit_challenge(challenge_id, answer, points, client_day=None):
         return C.fail("That's a lot of attempts in one hour. Take a break and come back.")
     day = today(client_day)
     clean, score = score_points(points, len(ch["rubric"]))
-    app_tables.attempts.add_row(user=me, challenge=challenge_id, module=ch["module"], answer=answer, points=clean,
-                                score=score, created=C.now(), is_demo=False)
+    row = app_tables.attempts.add_row(user=me, challenge=challenge_id, module=ch["module"], answer=answer, points=clean,
+                                      score=score, created=C.now(), is_demo=False)
     p = _progress_row(me, ch["module"])
     prev = int(p["challenge_score"] or 0)
     gained = 5 + max(0, score - prev) // 4
@@ -273,5 +288,5 @@ def submit_challenge(challenge_id, answer, points, client_day=None):
         p["challenge_score"] = score
     add_xp(me, gained, day)
     done = check_complete(me, ch["module"], day)
-    return C.ok(score=score, best=max(score, prev), passed=score >= K.PASS_CHALLENGE, xp_gained=gained, xp=me["xp"],
+    return C.ok(attempt_id=row.get_id(), score=score, best=max(score, prev), passed=score >= K.PASS_CHALLENGE, xp_gained=gained, xp=me["xp"],
                 module_completed=done, module_title=K.MODULES[ch["module"]]["title"] if done else None)

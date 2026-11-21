@@ -34,24 +34,57 @@
                 <h3 anvil:dom-node="res_head"></h3>
                 <div class="pct" anvil:dom-node="res_pct"></div>
                 <p class="small" anvil:dom-node="res_text"></p>
+                <div class="ui-row ch-res-actions" anvil:name="guest_actions">
+                  <anvil-component type="Button" name="save_button" prop:text="Save this: create a free account" prop:role='["btn", "btn-gold", "ic-user"]'></anvil-component>
+                </div>
                 <div class="ui-row ch-res-actions">
                   <a class="ui-btn" anvil:dom-node="res_back">Back to the module</a>
+                  <anvil-component type="Button" name="ask_result_button" prop:text="Ask for a second opinion" prop:role='["btn", "ic-users"]'></anvil-component>
                   <anvil-component type="Button" name="retry_button" prop:text="Try again" prop:role='["btn", "btn-primary", "ic-refresh"]'></anvil-component>
                 </div>
               </div>
             </div>
           </div>
           <aside class="ui-stack">
+            <div class="ui-card ch-call-card" anvil:name="call_card">
+              <h2 class="cs-ph">This week&rsquo;s Boardroom Call</h2>
+              <p class="small muted" anvil:dom-node="call_text"></p>
+              <div class="ui-row">
+                <anvil-component type="Button" name="share_button" prop:text="Copy link" prop:role='["btn", "btn-sm", "ic-link"]'></anvil-component>
+                <a class="ui-btn sm" anvil:dom-node="li_share" target="_blank" rel="noopener">Share on LinkedIn <i class="ic ic-external"></i></a>
+              </div>
+            </div>
             <div class="ui-card">
               <h2 class="cs-ph">How it&rsquo;s scored</h2>
               <p class="small muted" anvil:dom-node="how"></p>
             </div>
-            <div class="ui-card">
+            <div class="ui-card" anvil:name="guest_card">
+              <h2 class="cs-ph">No account needed</h2>
+              <p class="small muted">Write your decision, see the model answer, tick what you covered and get your score on the spot. Create a free account afterwards to keep it: nothing to retype.</p>
+            </div>
+            <div class="ui-card" anvil:name="attempts_card">
               <h2 class="cs-ph">Your attempts</h2>
               <anvil-component type="RepeatingPanel" name="attempts_panel" prop:item_template="C_Suite_Coach.Items.AttemptRow" prop:role='["ch-hist"]'></anvil-component>
               <p class="muted small" anvil:name="no_attempts">No attempts yet.</p>
             </div>
+            <div class="ui-card" anvil:name="reviews_card">
+              <h2 class="cs-ph">Second opinions</h2>
+              <p class="small muted" anvil:dom-node="calib_text"></p>
+              <anvil-component type="RepeatingPanel" name="reviews_panel" prop:item_template="C_Suite_Coach.Items.ReviewRow" prop:role='["ch-hist"]'></anvil-component>
+              <p class="muted small" anvil:name="no_reviews">Ask a mentor, coach or manager to mark one of your answers against the rubric. They need no account, and they see the model answer only after they send their verdict.</p>
+            </div>
           </aside>
+        </div>
+      </div>
+      <div class="ui-wrap ui-narrow" anvil:name="locked_part">
+        <div class="ui-empty ch-locked">
+          <i class="ic ic-lock"></i>
+          <h2>Enrol free to take this challenge</h2>
+          <p anvil:dom-node="locked_text"></p>
+          <div class="ui-row ch-res-actions">
+            <anvil-component type="Button" name="enrol_button" prop:text="Enrol, free" prop:role='["btn", "btn-primary", "ic-user"]'></anvil-component>
+            <a class="ui-btn" href="#call">Try this week&rsquo;s Boardroom Call</a>
+          </div>
         </div>
       </div>
       <div class="ui-wrap ui-narrow" anvil:name="missing_part">

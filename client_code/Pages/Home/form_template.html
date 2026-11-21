@@ -28,6 +28,15 @@
               <a class="ui-btn primary lg" href="#study/review" anvil:name="review_link"><i class="ic ic-cards"></i>Start review</a>
               <a class="ui-btn lg" href="#tracks" anvil:name="programs_link"><i class="ic ic-columns"></i>Programs</a>
             </div>
+            <section class="cs-panel hm-ninety" anvil:name="ninety_panel">
+              <header><h2 anvil:dom-node="ninety_title"></h2><a class="small" href="#ninety">Your plan</a></header>
+              <div class="body">
+                <anvil-component type="C_Suite_Coach.Components.Bar" name="ninety_bar" prop:label="Steps done in your 90-day plan"></anvil-component>
+                <p class="muted small" anvil:dom-node="ninety_text"></p>
+              </div>
+            </section>
+            <anvil-component type="C_Suite_Coach.Components.CallCard" name="call_card"></anvil-component>
+            <p class="ui-note hm-calib" anvil:name="calib_note"><i class="ic ic-users"></i> <span anvil:dom-node="calib_text"></span></p>
             <section class="cs-panel hm-team" anvil:name="team_panel">
               <header><h2 anvil:dom-node="team_title"></h2><a class="small" href="#team">Your team</a></header>
               <div class="body">

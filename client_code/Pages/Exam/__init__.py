@@ -79,17 +79,28 @@ class Exam(ExamTemplate):
         self.write_part.visible, self.mark_part.visible = True, False
         self._show("part2")
         anvil.js.window.scrollTo(0, 0)
+        if c.get("model") and c.get("answer"):  # reopened after the answer was locked: straight to the criteria
+            self._mark(c["answer"], c["model"], c["rubric"])
 
     @handle("write_button", "click")
     def write_button_click(self, **event_args):
+        """The answer is saved (locked) on the server first; only then do the model answer and criteria come back."""
         self.answer = (self.answer_box.text or "").strip()
         if len(self.answer) < 80:
             state.toast("Write at least a short paragraph (80 characters).", "error")
             return
-        c, n = self.d["capstone"], self.dom_nodes
-        cs.set_text(n["mine"], self.answer)
-        cs.set_text(n["model"], c["model"])
-        self.rubric.items = c["rubric"]
+        self.write_button.enabled = False
+        r = state.call("lock_exam_answer", self.d["exam_id"], self.answer)
+        self.write_button.enabled = True
+        if r:
+            self._mark(r["answer"], r["model"], r["rubric"])
+
+    def _mark(self, answer, model, rubric):
+        n = self.dom_nodes
+        self.answer = answer
+        cs.set_text(n["mine"], answer)
+        cs.set_text(n["model"], model)
+        self.rubric.items = rubric
         self.write_part.visible, self.mark_part.visible = False, True
         self.mark_part.scroll_into_view(smooth=True)
 

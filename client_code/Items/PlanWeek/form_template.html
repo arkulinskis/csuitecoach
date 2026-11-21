@@ -1,0 +1,10 @@
+<div class="nt-week-host">
+  <div class="nt-phase" anvil:name="phase_box">
+    <h2 anvil:dom-node="phase_name"></h2>
+    <p anvil:dom-node="phase_line"></p>
+  </div>
+  <section class="nt-week" anvil:name="card">
+    <header class="nt-week-head"><h3 anvil:dom-node="title"></h3><span class="ui-badge" anvil:dom-node="badge"></span></header>
+    <anvil-component type="RepeatingPanel" name="steps_panel" prop:item_template="C_Suite_Coach.Items.PlanStep" prop:role='["nt-steps"]'></anvil-component>
+  </section>
+</div>

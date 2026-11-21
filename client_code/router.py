@@ -10,6 +10,7 @@ New page: add it to PAGES, to _form() and (if it belongs in the menu) to NAV.
 """
 import anvil
 import anvil.js
+import anvil.server
 from anvil.js import window
 
 from . import state
@@ -21,7 +22,10 @@ PAGES = {
     "tracks": (None, "Programs"),
     "module": (None, "Module"),
     "study": ("user", "Review"),
-    "challenge": ("user", "Challenge"),
+    "challenge": (None, "Challenge"),
+    "call": (None, "Boardroom Call"),
+    "review": (None, "Second opinion"),
+    "ninety": (None, "Your first 90 days"),
     "exam": ("user", "Final examination"),
     "credentials": ("user", "Credentials"),
     "certificate": (None, "Certificate"),
@@ -34,7 +38,7 @@ PAGES = {
 }
 NAV = [("home", "Home", "home"), ("tracks", "Programs", "columns"), ("study", "Review", "cards"),
        ("credentials", "Credentials", "award")]
-NAV_MORE = [("cases", "Casebook", "book")]
+NAV_MORE = [("cases", "Casebook", "book"), ("ninety", "First 90 days", "calendar")]
 GUEST_NAV = [("tracks", "Programs", "columns"), ("cases", "Casebook", "book"), ("team", "For teams", "users"), ("verify", "Verify", "shield")]
 APP_NAME = "C-Suite Coach"
 _r: dict = {"after": "", "listening": False}
@@ -87,6 +91,12 @@ def _form(name):
     if name == "join":
         from .Pages.Join import Join
         return Join
+    if name == "review":
+        from .Pages.Review import Review
+        return Review
+    if name == "ninety":
+        from .Pages.Ninety import Ninety
+        return Ninety
     from .Pages.Admin import Admin
     return Admin
 
@@ -111,6 +121,10 @@ def show():
     name, args = parse(window.location.hash)
     if name not in PAGES:
         name, args = home_page(), []
+    if name == "call":  # #call = this week's Boardroom Call: a stable share link that opens the week's challenge
+        r = anvil.server.call("get_boardroom_call", str(window.CS.today()))
+        name, args = "challenge", [r["id"]]
+        window.history.replaceState(None, "", href("challenge", r["id"]))
     who = PAGES[name][0]
     if who == "guest" and state.me():
         name, args = "home", []

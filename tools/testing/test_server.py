@@ -197,7 +197,11 @@ bad(call("mark_read", "nope"))
 assert ok(call("mark_read", "core-decide", today))["first"] is True
 assert ok(call("mark_read", "core-decide", today))["first"] is False
 ch = ok(call("get_challenge", "ch-core-decide"))
-assert ch["challenge"]["rubric"] and ch["best"] == 0 and ch["module"]["id"] == "core-decide"
+assert ch["challenge"]["rubric_count"] and ch["best"] == 0 and ch["module"]["id"] == "core-decide"
+assert "model" not in ch["challenge"] and "rubric" not in ch["challenge"], "no model answer before the member writes"
+rv = ok(call("reveal_challenge", "ch-core-decide"))
+assert rv["model"] and rv["rubric"]
+bad(call("reveal_challenge", "cap-core"), "capstones are only in exams")
 bad(call("get_challenge", "cap-core"), "capstones are only in exams")
 bad(call("submit_challenge", "ch-core-decide", "too short", [True]))
 low = ok(call("submit_challenge", "ch-core-decide", "I would delegate the pricing test and slow down the acquisition.", [True, False, False, False, False], today))
@@ -230,7 +234,9 @@ for mid in K.TRACK_BY_ID["core"]["modules"]:
     for item in K.module_items(mid):
         ok(call("rate_item", item, True, today))
 ex = ok(call("get_exam", "core"))
-assert ex["state"] == "ready" and len(ex["items"]) == K.EXAM_ITEMS and ex["capstone"]["rubric"]
+assert ex["state"] == "ready" and len(ex["items"]) == K.EXAM_ITEMS and ex["capstone"]["rubric_count"]
+assert "model" not in ex["capstone"] and "rubric" not in ex["capstone"], "get_exam must not send the model answer"
+assert K.TRACK_BY_ID["core"]["capstone"]["model"] not in json.dumps(ex), "the capstone model answer leaked"
 assert ok(call("get_exam", "core"))["exam_id"] == ex["exam_id"], "an open exam is reused"
 ratings = {i["id"]: True for i in ex["items"]}
 as_user(bob)
@@ -238,7 +244,15 @@ bad(call("submit_exam", ex["exam_id"], ratings, "x" * 100, [True] * 5, True), "s
 as_user(ana)
 bad(call("submit_exam", ex["exam_id"], ratings, "x" * 100, [True] * 5, False), "honour code")
 bad(call("submit_exam", ex["exam_id"], {}, "x" * 100, [True] * 5, True), "every item rated")
-bad(call("submit_exam", ex["exam_id"], ratings, "short", [True] * 5, True), "scenario answer")
+bad(call("submit_exam", ex["exam_id"], ratings, "x" * 100, [True] * 5, True), "the answer must be locked first")
+bad(call("lock_exam_answer", ex["exam_id"], "short"), "scenario answer")
+as_user(bob)
+bad(call("lock_exam_answer", ex["exam_id"], "x" * 100), "someone else's exam")
+as_user(ana)
+lk = ok(call("lock_exam_answer", ex["exam_id"], "My plan for the first ninety days covers safety, guidance, the product line and the team." * 2))
+assert lk["model"] and lk["rubric"]
+assert ok(call("lock_exam_answer", ex["exam_id"], "A different answer written after seeing the model answer." * 3))["answer"] == lk["answer"], "locked"
+assert ok(call("get_exam", "core"))["capstone"]["model"], "a reload after locking shows the criteria again"
 half = dict(ratings)
 for k in list(half)[:4]:
     half[k] = False
@@ -251,6 +265,7 @@ for r in T.exams.search(user=ana):  # pretend the cooldown has passed
     r["finished"] = r["finished"] - dt.timedelta(hours=1)
 ex2 = ok(call("get_exam", "core"))
 assert ex2["state"] == "ready" and ex2["exam_id"] != ex["exam_id"]
+ok(call("lock_exam_answer", ex2["exam_id"], "A complete answer to the capstone scenario with priorities and order." * 2))
 res = ok(call("submit_exam", ex2["exam_id"], {i["id"]: True for i in ex2["items"]}, "A complete answer to the capstone scenario with priorities and order." * 2, [True] * 5, True, today))
 assert res["passed"] and res["code"].startswith("CSC-EXF-") and res["fellow"] is None
 assert ok(call("get_exam", "core"))["state"] == "certified"
@@ -374,6 +389,77 @@ bad(call("update_team", ""))
 ok(call("delete_team"))
 assert call("get_team")["managed"] is None and len(T.teams.search(owner=boss)) == 0
 
+# ---------------------------------------------------------------------------------- Boardroom Call, second opinions, 90 days
+as_user(None)
+mon = dt.date(2026, 11, 16)
+assert K.call_for(mon) == K.call_for(mon + dt.timedelta(days=6)) != K.call_for(mon + dt.timedelta(days=7)), "a new call every Monday"
+call_id = call("get_boardroom_call")["id"]
+pv = ok(call("get_challenge_preview", call_id))
+assert pv["allowed"] and pv["is_call"] and "model" not in pv["challenge"]
+assert ok(call("get_challenge_preview", "ch-core-decide"))["allowed"], "module 1 is open to visitors"
+m3 = [cid for cid in K.CALL_ROTATION if K.MODULES[K.CHALLENGES[cid]["module"]]["n"] == 3 and cid != call_id][0]
+assert ok(call("get_challenge_preview", m3))["allowed"] is False
+bad(call("reveal_challenge", m3), "visitors can't reveal locked challenges")
+ok(call("reveal_challenge", call_id))
+bad(call("get_challenge_preview", "cap-core"))
+for fn, args in [("create_review_link", ("x",)), ("my_reviews", ("ch-core-decide",)), ("revoke_review", ("x",)),
+                 ("start_transition", ("cfo", "turnaround", "external", "2026-11-20")), ("tick_step", ("b-expect", True)),
+                 ("lock_exam_answer", ("x", "y"))]:
+    assert denied(fn, *args), fn
+att = [r for r in T.attempts.search(user=ana, challenge="ch-core-decide")][0]
+as_user(bob)
+bad(call("create_review_link", att.get_id()), "someone else's answer")
+as_user(ana)
+link = ok(call("create_review_link", att.get_id()))
+as_user(None)
+gr = call("get_review", link["token"])
+assert gr["found"] and not gr["used"] and gr["owner"] == "Ana" and gr["challenge"]["rubric"] and "model" not in json.dumps(gr)
+assert "@" not in json.dumps(gr), "no emails from a public callable"
+bad(call("submit_review", link["token"], "", [True]), "a name is needed")
+sv = ok(call("submit_review", link["token"], "Dana " * 30, [True, True, "x", 1, 0, True, True, True], "c" * 5000))
+assert sv["model"] and sv["score"] == 80
+bad(call("submit_review", link["token"], "Dana", [True]), "once per link")
+assert call("get_review", link["token"])["used"]
+rv_row = T.reviews.get(token=link["token"])
+assert len(rv_row["reviewer"]) <= 60 and len(rv_row["comment"]) <= 1000 and len(rv_row["points"]) == len(K.CHALLENGES["ch-core-decide"]["rubric"])
+as_user(ana)
+mr = call("my_reviews", "ch-core-decide")
+assert mr["items"][0]["score"] == 80 and mr["calibration"]["n"] == 1
+link2 = ok(call("create_review_link", att.get_id()))
+as_user(bob)
+bad(call("revoke_review", link2["review"]["id"]))
+as_user(ana)
+ok(call("revoke_review", link2["review"]["id"]))
+assert call("get_review", link2["token"])["found"] is False, "revoked links are not found"
+assert call("get_dashboard", today)["calibration"]["n"] == 1
+as_user(None)
+for role in ["ceo", "cfo", "coo", "chro", "tech", "cmo"]:
+    for sit in ["startup", "turnaround", "growth", "realign", "sustain"]:
+        for org in ["internal", "external"]:
+            weeks = ok(call("get_transition_plan", role, sit, org))["weeks"]
+            assert len(weeks) == 13 and all(w["steps"] for w in weeks), (role, sit, org)
+            for w in weeks:
+                for stp in w["steps"]:
+                    assert stp["why"] and stp["source"]["url"].startswith("https://"), stp["id"]
+                    kind, _, ref = stp["link"].lstrip("#").partition("/")
+                    assert (kind == "module" and ref in K.MODULES) or (kind == "cases" and ref in K.CASE_BY_ID), stp["link"]
+bad(call("get_transition_plan", "cfo", "nope", "external"))
+a = [x["id"] for w in call("get_transition_plan", "cfo", "turnaround", "external")["weeks"] for x in w["steps"]]
+b = [x["id"] for w in call("get_transition_plan", "cmo", "sustain", "external")["weeks"] for x in w["steps"]]
+assert a != b, "role and situation change the steps"
+as_user(ana)
+start = (dt.date.today() - dt.timedelta(days=15)).isoformat()
+mine = ok(call("start_transition", "cfo", "turnaround", "external", start, today))["mine"]
+assert mine["week"] == 3 and mine["this_week"] >= 1
+bad(call("start_transition", "cfo", "turnaround", "external", "1990-01-01", today))
+bad(call("tick_step", "cmo-mandate", True), "not in this plan")
+assert "cfo-cash" in ok(call("tick_step", "cfo-cash", True, today))["mine"]["done"]
+assert call("get_dashboard", today)["transition"]["week"] == 3
+as_user(bob)
+assert ok(call("my_transition"))["mine"] is None, "plans are per person"
+as_user(ana)
+assert ok(call("my_transition", today))["mine"]["done"] == ["cfo-cash"]
+
 # ---------------------------------------------------------------------------------- Privacy & Terms
 if "legal_server" in M:
     as_user(ana)
@@ -385,7 +471,8 @@ if "legal_server" in M:
 # ---------------------------------------------------------------------------------- every callable is covered by a permission check
 # A callable that changes data without require_user / a C.require_* check is a security hole. List the public ones here.
 PUBLIC = {"log_client_error", "session_ping", "get_me", "submit_feedback", "legal_state", "legal_accept", "get_catalog", "get_track", "get_module", "get_cases",
-          "get_case", "get_honour_roll", "get_credential", "get_invite"}
+          "get_case", "get_honour_roll", "get_credential", "get_invite", "get_boardroom_call", "get_challenge_preview",
+          "reveal_challenge", "get_review", "submit_review", "get_transition_options", "get_transition_plan"}
 for name, (f, need) in sorted(anvil.server.CALLABLES.items()):
     if name in PUBLIC:
         continue

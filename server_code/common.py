@@ -18,6 +18,11 @@ def now():
     return dt.datetime.now(dt.timezone.utc)
 
 
+def aware(v):
+    """A datetime with a time zone (Anvil may hand back naive UTC datetimes)."""
+    return v.replace(tzinfo=dt.timezone.utc) if v is not None and v.tzinfo is None else v
+
+
 def iso(v):
     """date/datetime -> ISO string (datetimes in UTC), anything else unchanged."""
     if isinstance(v, dt.datetime):

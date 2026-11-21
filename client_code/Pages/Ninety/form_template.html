@@ -1,0 +1,44 @@
+<anvil-form layout="C_Suite_Coach.Layouts.Shell">
+  <anvil-block slot="content">
+    <div class="nt">
+      <div class="no-print"><anvil-component type="C_Suite_Coach.Components.Hero" name="hero"></anvil-component></div>
+      <div class="ui-wrap nt-body">
+        <section class="ui-card nt-controls no-print" aria-label="Build your plan">
+          <div class="nt-fields">
+            <label class="ui-field"><span>Your role</span>
+              <anvil-component type="DropDown" name="role_dd"></anvil-component>
+            </label>
+            <label class="ui-field"><span>The situation you inherit</span>
+              <anvil-component type="DropDown" name="situation_dd"></anvil-component>
+            </label>
+            <label class="ui-field"><span>Where you come from</span>
+              <anvil-component type="DropDown" name="origin_dd"></anvil-component>
+            </label>
+            <label class="ui-field"><span>Your start date</span>
+              <anvil-component type="TextBox" name="start_box"></anvil-component>
+            </label>
+          </div>
+          <p class="small muted nt-sit" anvil:dom-node="sit_line"></p>
+          <div class="nt-status" anvil:name="status_box">
+            <b anvil:dom-node="status_head"></b>
+            <span class="small" anvil:dom-node="status_text"></span>
+          </div>
+          <div class="ui-row nt-actions">
+            <anvil-component type="Button" name="start_button" prop:text="Start my 90 days" prop:role='["btn", "btn-primary", "ic-calendar"]'></anvil-component>
+            <anvil-component type="Button" name="print_button" prop:text="Print" prop:role='["btn", "ic-print"]'></anvil-component>
+            <anvil-component type="Button" name="stop_button" prop:text="Remove my plan" prop:role='["btn", "btn-ghost", "ic-trash"]'></anvil-component>
+          </div>
+          <p class="fine-print" anvil:name="guest_note">Read and print it as a visitor. Create a free account to save it, tick steps off and see your week on your dashboard.</p>
+        </section>
+
+        <header class="nt-print-head">
+          <h2 anvil:dom-node="plan_title"></h2>
+          <p class="muted" anvil:dom-node="plan_sub"></p>
+        </header>
+        <p class="ui-error" anvil:name="error_box">The plan didn't load. Check your connection and try again.</p>
+        <anvil-component type="RepeatingPanel" name="weeks_panel" prop:item_template="C_Suite_Coach.Items.PlanWeek" prop:role='["nt-weeks"]'></anvil-component>
+        <p class="fine-print nt-foot">Built on Michael Watkins&rsquo;s STARS model (<em>The First 90 Days</em>; HBR, 2009) and research from IMD, McKinsey, Russell Reynolds Associates, BCG and Spencer Stuart. Every step lists its source. General guidance, not professional advice: adapt it with your boss, your board and your HR partner.</p>
+      </div>
+    </div>
+  </anvil-block>
+</anvil-form>

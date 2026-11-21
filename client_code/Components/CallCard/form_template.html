@@ -1,0 +1,30 @@
+---
+custom_component: true
+properties:
+  - name: call
+    type: object
+    default_value: null
+    description: This week's Boardroom Call (Curriculum.call_summary)
+    default_binding_prop: true
+toolbox_item:
+  title: Boardroom Call card
+  group: C-Suite Coach
+help_text: |
+  The weekly Boardroom Call (landing and Home): title, teaser, days left, Make the call (or Done this week) and Share.
+---
+<div class="cc-host">
+  <section class="cc" anvil:name="card" aria-labelledby="cc-title">
+    <div class="cc-ph" anvil:dom-node="ph" aria-hidden="true"></div>
+    <div class="cc-body">
+      <h2 id="cc-title" class="cc-title"><span class="cc-pre">This week&rsquo;s Boardroom Call: </span><span anvil:dom-node="title"></span></h2>
+      <p class="cc-meta"><i class="ic ic-calendar"></i><span anvil:dom-node="left"></span></p>
+      <p class="cc-teaser" anvil:dom-node="teaser"></p>
+      <p class="cc-ask" anvil:dom-node="ask"></p>
+      <div class="ui-row cc-actions">
+        <a class="ui-btn gold" anvil:dom-node="go"></a>
+        <anvil-component type="Button" name="share_button" prop:text="Share" prop:role='["btn", "ic-link", "cc-share"]'></anvil-component>
+        <a class="ui-btn ghostl cc-li" anvil:dom-node="li" target="_blank" rel="noopener">LinkedIn <i class="ic ic-external"></i></a>
+      </div>
+    </div>
+  </section>
+</div>

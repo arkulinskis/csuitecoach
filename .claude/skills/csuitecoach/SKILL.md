@@ -135,6 +135,29 @@ tools/                     check.py, assets.py, build_icons.py, make_icons.py, u
   go through `anvil.email` (service in anvil.yaml); never put the manager's email in them. Dashboard gets
   `team` from `Teams.team_for_dashboard`. Tests: server tests "team plan" block, tools/ui/team.js (whole journey).
 
+## Boardroom Call, second opinions, First 90 days (2026-11-20)
+
+- **No model answers before the answer (integrity rule):** `Curriculum.challenge_public` never has `model`/`rubric`
+  (only `rubric_count`). Module challenges: the page calls `reveal_challenge` after the answer is written. Exams:
+  `Exams.lock_exam_answer` saves the capstone answer in `exams.detail["answer"]` and only then returns model + rubric;
+  `submit_exam` scores the saved answer (its `answer` argument is ignored). Server tests check get_exam has no model.
+- **Boardroom Call:** `Curriculum.CALL_ROTATION` (the 34 module challenge ids in program order), `call_for(day)` = by
+  Monday's ordinal // 7, so the same all week and the next one each Monday. `#call` is resolved in `router.show()`
+  (get_boardroom_call, then replaceState to `#challenge/<id>`; there is no Call page). Visitors: `get_challenge_preview`
+  (module 1 of any program, or this week's call; else allowed=False -> enrol card) and `reveal_challenge`; the score is
+  computed in the page and the attempt waits in localStorage `pending_call` (JSON, 24 h) until sign-up, when
+  Pages/Challenge submits it. No visitor data reaches the server. Card: `Components/CallCard` (landing + Home).
+- **Second opinions:** `server_code/Reviews.py`, table `reviews`, pages `Pages/Review` (#review/<token>), items
+  `ReviewRow` (on Pages/Challenge), the button in `Items/AttemptRow` (event x-ask). Public `get_review` gives the
+  owner's first name only; `submit_review` once per link (transaction), name <= 60, comment <= 1000, points clamped by
+  `Learning.score_points`. Calibration (`Reviews.calibration`) on Home via `get_dashboard`.
+- **First 90 days:** `content_transition.py` (sourced steps: BASE + ROLE_STEPS + SITUATION_STEPS + ORIGIN_STEPS; step
+  ids are stored in members' ticks, never rename), `server_code/Transition.py` (table `transitions`, one per member),
+  `Pages/Ninety` with `Items/PlanWeek` + `Items/PlanStep` (tick -> `page.tick()`), print CSS. The address keeps the
+  choices (`#ninety/cfo/turnaround/external`).
+- `get_dashboard` reads `reviews`/`transitions` through `Learning._safe`, and DemoData skips them, so the app works
+  before the Schema Mismatch is accepted.
+
 ## Recipes
 
 - **New table or column:** `db_schema` in anvil.yaml (same shape as the existing tables, `client: none`), then add it

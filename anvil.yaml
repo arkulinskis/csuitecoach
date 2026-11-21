@@ -350,6 +350,74 @@ db_schema:
     indexes: []
     server: full
     title: Module progress
+  reviews:
+    client: none
+    columns:
+    - admin_ui:
+        order: 0
+        width: 200
+      name: attempt
+      target: attempts
+      type: link_single
+    - admin_ui:
+        order: 1
+        width: 200
+      name: owner
+      target: users
+      type: link_single
+    - admin_ui:
+        order: 2
+        width: 200
+      name: challenge
+      type: string
+    - admin_ui:
+        order: 3
+        width: 200
+      name: token
+      type: string
+    - admin_ui:
+        order: 4
+        width: 200
+      name: created
+      type: datetime
+    - admin_ui:
+        order: 5
+        width: 200
+      name: reviewer
+      type: string
+    - admin_ui:
+        order: 6
+        width: 200
+      name: points
+      type: simpleObject
+    - admin_ui:
+        order: 7
+        width: 200
+      name: score
+      type: number
+    - admin_ui:
+        order: 8
+        width: 200
+      name: comment
+      type: string
+    - admin_ui:
+        order: 9
+        width: 200
+      name: reviewed
+      type: datetime
+    - admin_ui:
+        order: 10
+        width: 200
+      name: revoked
+      type: bool
+    - admin_ui:
+        order: 11
+        width: 200
+      name: is_demo
+      type: bool
+    indexes: []
+    server: full
+    title: Second opinions
   team_members:
     client: none
     columns:
@@ -445,6 +513,53 @@ db_schema:
     indexes: []
     server: full
     title: Teams
+  transitions:
+    client: none
+    columns:
+    - admin_ui:
+        order: 0
+        width: 200
+      name: user
+      target: users
+      type: link_single
+    - admin_ui:
+        order: 1
+        width: 200
+      name: role
+      type: string
+    - admin_ui:
+        order: 2
+        width: 200
+      name: situation
+      type: string
+    - admin_ui:
+        order: 3
+        width: 200
+      name: origin
+      type: string
+    - admin_ui:
+        order: 4
+        width: 200
+      name: start
+      type: date
+    - admin_ui:
+        order: 5
+        width: 200
+      name: done
+      type: simpleObject
+    - admin_ui:
+        order: 6
+        width: 200
+      name: created
+      type: datetime
+    - admin_ui:
+        order: 7
+        width: 200
+      name: is_demo
+      type: bool
+    indexes: []
+    server: full
+    title: First 90 days plans
   users:
     client: none
     columns:
@@ -566,13 +681,14 @@ db_schema:
     server: full
     title: Users
 metadata:
-  description: "Executive training for the C-suite: real business cases, boardroom challenges and spaced-repetition drills. Earn C-Suite Coach Institute certificates."
-  logo_img: "asset:icon-512.png"
-  title: "C-Suite Coach Institute: executive training and certificates"
+  description: 'Executive training for the C-suite: real business cases, boardroom challenges and spaced-repetition drills.
+    Earn C-Suite Coach Institute certificates.'
+  logo_img: asset:icon-512.png
+  title: 'C-Suite Coach Institute: executive training and certificates'
 name: C-Suite Coach
 native_deps:
   head_html: |
-    <script src="_/theme/legal-kit.js?v=51bf17334e"></script>
+    <script src="_/theme/legal-kit.js?v=e5e86dae88"></script>
     <!-- seo:start (APP_MAKER/seo: edit seo/apps/csuitecoach.json and run seo.py, not here) -->
     <link rel="canonical" href="https://csuite-coach.anvil.app/">
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
@@ -630,7 +746,7 @@ native_deps:
     <!-- Prepsto feedback panel: every "Submit feedback" link and button opens it (it is the only feedback channel). No floating button, no cookies, nothing loads until it is opened. Codes: APP_MAKER/prepsto-links.json -->
     <script src="https://prepsto.com/_/theme/widget.js" data-prepsto="fha858r" data-button="false" data-label="Submit feedback" async></script>
     <link rel="stylesheet" href="_/theme/icons.css?v=cf169c9499">
-    <link rel="stylesheet" href="_/theme/app.css?v=2a65a72d48">
+    <link rel="stylesheet" href="_/theme/app.css?v=94d95b252b">
     <script src="_/theme/app-kit.js?v=d830286153"></script>
     <script src="_/theme/cs-cert.js?v=ed913c6686"></script>
 package_name: C_Suite_Coach

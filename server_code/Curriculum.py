@@ -6,7 +6,12 @@ This module assembles it into lookups and serves the public catalogue pages (no 
 
 Ids: track "cfo"; module "cfo-risk"; drill item "cfo-risk:c3" (card) / "cfo-risk:a1" (advice call);
 challenge "ch-cfo-risk"; capstone "cap-cfo".
+
+Model answers and rubrics never go to the browser before an answer is written (2026-11-20): challenge_public has
+neither; reveal_challenge (module challenges) and Exams.lock_exam_answer (capstones) send them afterwards.
 """
+import datetime as dt
+
 import anvil.server
 from anvil.tables import app_tables
 
@@ -88,9 +93,15 @@ def item_public(item_id):
 
 
 def challenge_public(ch):
+    """What anyone may see BEFORE writing an answer: never the model answer or the rubric (challenge_reveal has them)."""
     return {"id": ch["id"], "title": ch["title"], "photo": ch.get("photo") or "ph-boardroom", "situation": ch["situation"],
-            "ask": ch["ask"], "model": ch["model"], "rubric": list(ch["rubric"]), "module": ch.get("module"),
+            "ask": ch["ask"], "rubric_count": len(ch["rubric"]), "module": ch.get("module"),
             "capstone_of": ch.get("capstone_of")}
+
+
+def challenge_reveal(ch):
+    """The examiners' notes, sent only once an answer is written (module challenges) or saved (examinations)."""
+    return {"id": ch["id"], "model": ch["model"], "rubric": list(ch["rubric"])}
 
 
 def case_brief(c):
@@ -163,7 +174,109 @@ def user_credentials(user):
     return out
 
 
+# ------------------------------------------------------------------------------------------- the Boardroom Call
+# One module challenge a week that anyone can take without an account (#call). The rotation walks every module
+# challenge in program order; a new call starts every Monday (the visitor's local day, if their browser sends it).
+CALL_ROTATION = [cid for t in TRACKS for cid in ["ch-" + mid for mid in t["modules"]] if cid in CHALLENGES]
+
+
+def _day(client_day=None):
+    """The visitor's local date if the browser sent a sensible one (within a day of UTC), else UTC today."""
+    utc = C.now().date()
+    try:
+        d = dt.date.fromisoformat(str(client_day)[:10])
+        if abs((d - utc).days) <= 1:
+            return d
+    except Exception:
+        pass
+    return utc
+
+
+def week_start(day):
+    return day - dt.timedelta(days=day.isoweekday() - 1)
+
+
+def call_for(day):
+    """This week's Boardroom Call challenge id: the same Monday to Sunday, the next one in the rotation next week."""
+    return CALL_ROTATION[(week_start(day).toordinal() // 7) % len(CALL_ROTATION)]
+
+
+def teaser(text, limit=190):
+    """The first sentence or two of a situation, cut at a word."""
+    out = ""
+    for sentence in text.replace("? ", "?|").replace(". ", ".|").split("|"):
+        if out and len(out) + len(sentence) + 1 > limit:
+            break
+        out = (out + " " + sentence).strip()
+    if len(out) > limit:
+        out = out[:limit].rsplit(" ", 1)[0] + "…"
+    return out
+
+
+def guest_may_open(challenge_id, day):
+    """Visitors may take a program's first module challenge and this week's Boardroom Call; members any module challenge."""
+    ch = CHALLENGES.get(challenge_id)
+    if ch is None or not ch.get("module"):
+        return False
+    return MODULES[ch["module"]]["n"] == 1 or challenge_id == call_for(day)
+
+
+def module_ref(m):
+    return {"id": m["id"], "title": m["title"], "n": m["n"], "track": TRACK_BY_ID[m["track"]]["title"], "track_id": m["track"]}
+
+
+def call_summary(day, user=None):
+    """The call card (landing + home): title, teaser, module, days left and, for members, done this week."""
+    cid = call_for(day)
+    ch = CHALLENGES[cid]
+    m = MODULES[ch["module"]]
+    out = {"id": cid, "title": ch["title"], "photo": ch.get("photo") or "ph-boardroom", "teaser": teaser(ch["situation"]),
+           "ask": ch["ask"], "module": module_ref(m), "days_left": 8 - day.isoweekday(),
+           "week_of": week_start(day).isoformat(), "done": False, "score": None}
+    if user is not None:
+        # a day's slack before Monday covers members whose local Monday is still Sunday in UTC
+        since = dt.datetime.combine(week_start(day) - dt.timedelta(days=1), dt.time(0, 0), tzinfo=dt.timezone.utc)
+        rows = [r for r in app_tables.attempts.search(user=user, challenge=cid) if r["created"] and C.aware(r["created"]) >= since]
+        if rows:
+            out["done"], out["score"] = True, max(int(r["score"] or 0) for r in rows)
+    return out
+
+
 # ------------------------------------------------------------------------------------------- public callables
+@anvil.server.callable
+def get_boardroom_call(client_day=None):
+    """Public: this week's Boardroom Call (no model answer, no rubric)."""
+    return C.ok(**call_summary(_day(client_day), C.me()))
+
+
+@anvil.server.callable
+def get_challenge_preview(challenge_id, client_day=None):
+    """Public: a challenge for a visitor without an account. Allowed for every program's first module challenge and for
+    this week's Boardroom Call; anything else comes back allowed=False (the page shows "Enrol free to take this")."""
+    day = _day(client_day)
+    ch = CHALLENGES.get(challenge_id) if isinstance(challenge_id, str) else None
+    if ch is None or not ch.get("module"):
+        return C.fail("That challenge doesn't exist.")
+    m = MODULES[ch["module"]]
+    base = {"module": module_ref(m), "is_call": challenge_id == call_for(day), "days_left": 8 - day.isoweekday(),
+            "pass_mark": PASS_CHALLENGE}
+    if not guest_may_open(challenge_id, day):
+        return C.ok(allowed=False, challenge={"id": ch["id"], "title": ch["title"], "photo": ch.get("photo") or "ph-boardroom"}, **base)
+    return C.ok(allowed=True, challenge=challenge_public(ch), **base)
+
+
+@anvil.server.callable
+def reveal_challenge(challenge_id, client_day=None):
+    """The model answer and rubric, asked for once the person has written their answer. Visitors: the same challenges as
+    get_challenge_preview. Members: any module challenge. Capstones never (they belong to the examinations)."""
+    ch = CHALLENGES.get(challenge_id) if isinstance(challenge_id, str) else None
+    if ch is None or not ch.get("module"):
+        return C.fail("That challenge doesn't exist.")
+    if C.me() is None and not guest_may_open(challenge_id, _day(client_day)):
+        return C.fail("Enrol free to take this challenge.")
+    return C.ok(**challenge_reveal(ch))
+
+
 @anvil.server.callable
 def get_catalog():
     """All programs, with the signed-in member's progress."""

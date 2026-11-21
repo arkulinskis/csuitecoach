@@ -1,0 +1,56 @@
+<anvil-form layout="C_Suite_Coach.Layouts.Shell">
+  <anvil-block slot="content">
+    <div class="ch rvw">
+      <anvil-component type="C_Suite_Coach.Components.Hero" name="hero"></anvil-component>
+      <div class="ui-wrap ui-narrow rvw-body">
+        <div class="ui-empty" anvil:name="gone_part">
+          <i class="ic ic-link"></i>
+          <h2 anvil:dom-node="gone_head">This link is no longer active</h2>
+          <p anvil:dom-node="gone_text">The person who sent it may have revoked it. Ask them for a new one if you'd still like to help.</p>
+          <a class="ui-btn primary" href="#call">Try this week&rsquo;s Boardroom Call</a>
+        </div>
+
+        <div class="ui-stack" anvil:name="ready_part">
+          <p class="ui-note" anvil:dom-node="intro"></p>
+          <div class="ch-brief">
+            <h2 class="cs-ph">The situation</h2>
+            <p class="sit" anvil:dom-node="situation"></p>
+            <p class="ask" anvil:dom-node="ask"></p>
+          </div>
+          <div class="ch-model">
+            <h3 anvil:dom-node="answer_head">Their answer</h3>
+            <div class="mine" anvil:dom-node="answer"></div>
+            <h3>Tick each criterion the answer genuinely covers</h3>
+            <anvil-component type="C_Suite_Coach.Components.Rubric" name="rubric"></anvil-component>
+            <div class="ui-stack rvw-form" anvil:name="form_part">
+              <label class="ui-field"><span>Your name <em>(they'll see it next to your verdict)</em></span>
+                <anvil-component type="TextBox" name="name_box" prop:placeholder="e.g. Dana Whitfield"></anvil-component>
+              </label>
+              <label class="ui-field"><span>A comment <em>(optional: what would make the answer stronger?)</em></span>
+                <anvil-component type="TextArea" name="comment_box" prop:placeholder="One or two things they did well, and one to improve."></anvil-component>
+              </label>
+              <div class="ui-row between">
+                <span class="small muted">You can send one verdict. The model answer appears after you send it.</span>
+                <anvil-component type="Button" name="send_button" prop:text="Send my verdict" prop:role='["btn", "btn-primary", "ic-check"]'></anvil-component>
+              </div>
+            </div>
+            <div class="ch-result pass" anvil:name="done_part">
+              <h3>Thank you: your verdict is sent</h3>
+              <div class="pct" anvil:dom-node="done_pct"></div>
+              <p class="small" anvil:dom-node="done_text"></p>
+            </div>
+          </div>
+          <div class="ch-model" anvil:name="model_part">
+            <h3>The examiners&rsquo; model answer</h3>
+            <p class="model" anvil:dom-node="model"></p>
+            <div class="ui-row rvw-next">
+              <a class="ui-btn primary" href="#call"><i class="ic ic-target"></i>Try this week&rsquo;s Boardroom Call yourself</a>
+              <a class="ui-btn" href="#landing">About C-Suite Coach</a>
+            </div>
+          </div>
+          <p class="fine-print">C-Suite Coach shows you only the first name of the person who asked, never their email. What you type here (your name, ticks and comment) goes only to them.</p>
+        </div>
+      </div>
+    </div>
+  </anvil-block>
+</anvil-form>

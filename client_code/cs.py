@@ -44,6 +44,16 @@ def verify_url(code):
     return str(window.CS.verifyUrl(code))
 
 
+def app_url(hash_part):
+    """This app's full address for a page ('#call' -> 'https://csuite-coach.anvil.app/#call'), for links people share."""
+    return "%s%s%s" % (window.location.origin, window.location.pathname, hash_part)
+
+
+def linkedin_share(url):
+    """LinkedIn's share page for a link (opens LinkedIn's site; nothing loads from LinkedIn before the click)."""
+    return "https://www.linkedin.com/sharing/share-offsite/?url=" + str(window.encodeURIComponent(url))
+
+
 def weekday(day):
     return str(window.CS.weekday(day))
 

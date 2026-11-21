@@ -78,6 +78,32 @@ class Home(HomeTemplate):
         cs.set_text(n["case_title"], c["title"])
         cs.set_text(n["case_summary"], c["summary"])
         n["case_link"].setAttribute("href", "#cases/" + c["id"])
+        # Boardroom Call, second-opinion calibration and the 90-day plan (2026-11-20)
+        self.call_card.call = d.get("call")
+        cal = d.get("calibration")
+        self.calib_note.visible = bool(cal)
+        if cal:
+            diff = cal["diff"]
+            who = "Your reviewer scores" if cal["n"] == 1 else "Reviewers score"
+            if diff == 0:
+                line = "%s you the same as your own marks on average." % who
+            else:
+                line = "%s you %s %s your own marks on average (%s)." % (
+                    who, state.plural(abs(diff), "point"), "below" if diff < 0 else "above", state.plural(cal["n"], "second opinion"))
+            cs.set_text(n["calib_text"], line)
+        tr = d.get("transition")
+        self.ninety_panel.visible = bool(tr)
+        if tr:
+            if tr["week"] <= 0:
+                head = "Your first 90 days start in %s" % state.plural(max(tr.get("days_to_start") or 0, 1), "day")
+            elif tr["week"] > tr["weeks"]:
+                head = "Your first 90 days are done"
+            else:
+                head = "Week %d of %d: %s this week" % (tr["week"], tr["weeks"], state.plural(tr["left"], "step"))
+            cs.set_text(n["ninety_title"], head)
+            self.ninety_bar.pct = int(round(100.0 * len(tr["done"]) / tr["total"])) if tr["total"] else 0
+            cs.set_text(n["ninety_text"], "%s · %s · %d of %d steps done" % (
+                tr["role_name"], tr["situation_name"], len(tr["done"]), tr["total"]))
         self.honour_panel.items = [dict(h, compact=True) for h in d["honour"]]
         self.no_honour.visible = not d["honour"]
         self.honour_panel.visible = bool(d["honour"])

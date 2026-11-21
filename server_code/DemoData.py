@@ -24,7 +24,8 @@ DEMO_USERS = [
 FELLOW_CODE = "CSC-FEL-2026-D9RV3C"   # Daniel holds core + 2 role certificates
 
 # Tables that hold demo rows (each has an is_demo column). Children before parents.
-DEMO_TABLES = ["credentials", "exams", "attempts", "module_progress", "card_state"]
+DEMO_TABLES = ["reviews", "transitions", "credentials", "exams", "attempts", "module_progress", "card_state"]
+NEW_TABLES = ("reviews", "transitions")  # added 2026-11-20: missing until the user accepts the Schema Mismatch
 
 
 def state():
@@ -63,6 +64,8 @@ def load():
             app_tables.exams.add_row(user=u, track=track, started=when - dt.timedelta(minutes=40), finished=when, card_score=92,
                                      scenario_score=80, passed=True, detail={"items": []}, is_demo=True)
             app_tables.credentials.add_row(user=u, track=track, code=code, holder=name, issued=when, score=86, revoked=False, is_demo=True)
+        if name == "Margaret Okafor":
+            _demo_extras(u, now)
         if name == "Daniel Reyes":
             app_tables.credentials.add_row(user=u, track="fellow", code=FELLOW_CODE, holder=name, issued=now - dt.timedelta(days=1),
                                            score=100, revoked=False, is_demo=True)
@@ -70,9 +73,34 @@ def load():
     return counts()
 
 
+def _demo_extras(u, now):
+    """Two second opinions on Margaret's answers and her 90-day plan (sample rows; skipped before the schema exists)."""
+    try:
+        atts = [r for r in app_tables.attempts.search(user=u, is_demo=True)][:2]
+        for att, (who, pts, note) in zip(atts, [
+                ("Dana Whitfield (sample)", [True, True, True, False, False], "Strong on the board, light on the people side."),
+                ("Tom Achebe (sample)", [True, True, True, True, False], "Clear order of actions. Say who owns each step.")]):
+            clean = pts[:5]
+            app_tables.reviews.add_row(attempt=att, owner=u, challenge=att["challenge"], token="demo-" + att.get_id()[-12:],
+                                       created=now - dt.timedelta(days=40), reviewer=who, points=clean,
+                                       score=int(round(100.0 * sum(clean) / len(clean))), comment=note,
+                                       reviewed=now - dt.timedelta(days=39), revoked=False, is_demo=True)
+        app_tables.transitions.add_row(user=u, role="cfo", situation="turnaround", origin="external",
+                                       start=(now - dt.timedelta(days=17)).date(), done=["b-expect", "b-stakeholders", "cfo-cash"],
+                                       created=now - dt.timedelta(days=18), is_demo=True)
+    except Exception:
+        pass
+
+
 def remove(remember=True):
     for name in DEMO_TABLES:
-        for r in getattr(app_tables, name).search(is_demo=True):
+        try:
+            rows = list(getattr(app_tables, name).search(is_demo=True))
+        except Exception:
+            if name in NEW_TABLES:
+                continue
+            raise
+        for r in rows:
             r.delete()
     for u in app_tables.users.search(is_demo=True):
         u.delete()
@@ -84,5 +112,8 @@ def remove(remember=True):
 def counts():
     out = {"users": len(app_tables.users.search(is_demo=True))}
     for name in DEMO_TABLES:
-        out[name] = len(getattr(app_tables, name).search(is_demo=True))
+        try:
+            out[name] = len(getattr(app_tables, name).search(is_demo=True))
+        except Exception:
+            out[name] = 0
     return out
